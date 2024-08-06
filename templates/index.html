@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Lógica</title>
+    <style>
+        .dataframe {
+            width: 50%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        .dataframe th, .dataframe td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .dataframe th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora Lógica</h1>
+    <form method="POST">
+        <label for="cantidad_vars">Con cuántas variables trabajará la operación:</label>
+        <input type="text" id="cantidad_vars" name="cantidad_vars"><br><br>
+        <label for="operacion">Ingrese la operación lógica a realizar:</label>
+        <input type="text" id="operacion" name="operacion"><br><br>
+        <button type="submit">Calcular</button>
+    </form>
+    {% if tabla_html %}
+        <h2>Resultado de la operación lógica: {{ operacion }}</h2>
+        <h3>Evaluación: {{ evaluacion }}</h3>
+        <div>{{ tabla_html|safe }}</div>
+    {% endif %}
+</body>
+</html>
