@@ -1,13 +1,16 @@
 import ttg
 from flask import Flask, render_template, request
 import pandas as pd
+import boolean
+from booleana import simplificar_operacion
 
+algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
 
 # Definimos constantes
 VARIABLES_CONST: tuple[str] = ("p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/calculadora_logica', methods=['GET', 'POST'])
 def index():
     # Verificamos si la solicitud es de tipo POST para procesar los datos enviados por el formulario
     if request.method == 'POST':
@@ -36,34 +39,16 @@ def index():
     # Si no es una solicitud POST, simplemente renderizamos la plantilla sin datos
     return render_template('index.html')
 
+@app.route("/calculadora_booleana", methods =["GET", "POST"])
+def calc_booleana():
+    if request.method == "POST":
+      operacion_logica = str(request.form["operacion_logica"])
+      resultado_simplificado = simplificar_operacion(operacion_logica)
+
+      return render_template("calc_booleana.html", 
+                            operacion_logica = operacion_logica, 
+                            resultado_simplificado = resultado_simplificado)
+    return render_template("calc_booleana.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-# Debido a que en la función Truths() se debe ingresar las variables que se van a usar, pedimos el número de variables que se usarán  
-cantidad_vars: int = int(input("Con cuántas variables trabajará la operación:"))
-
-# Para decirle al programa qué variables usaremos en la(s) operación iteramos en la lista que 
-# tiene las variables constantes para agregarlas a la lista que usaremos en la función de la librería ttg
-variables_usar: list[str] = []
-
-for i in range(cantidad_vars):
-  variables_usar.append(VARIABLES_CONST[i])
-
-
-operacion: str = input("Ingrese la operación lógica a realizar: ")
-
-def OperacionesLogicas(variables_tabla: list[str], ecuacion: str):
-    operacion = ttg.Truths(variables_tabla, [ecuacion], ascending = True)
-    return operacion
-
-resultado = OperacionesLogicas(variables_usar, operacion)
-resultado_df = resultado.as_pandas  # Se guarda como un dataframe de Pandas para iterar sobre los resultados
-print(resultado_df)
-
-# Para ser más específico en la entrega de resultados haremos uso de la función integrada de la librería ttg para decir si el resultado es una Tautología o una Contradicción
-evaluacion: str = resultado.valuation()
-print(f"El resultado de esta operación es una {evaluacion}")
-
-# Prueba: Iteramos en el resultado de la operación así sabemos que en Flask, por medio de jinja, podremos mostrar el resultado de la operación 
-for i in resultado_df[operacion]:
-   print(i)
