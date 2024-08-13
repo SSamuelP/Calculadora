@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Lógica</title>
+    <style>
+        .dataframe {
+            width: 50%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        .dataframe th, .dataframe td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .dataframe th {
+            background-color: #f2f2f2;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+        .clear-button {
+            background-color: #dc3545;
+            color: white;
+        }
+        .menu-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .calculate-button {
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora Lógica</h1>
+    <form id="logic-form" method="POST">
+        <label for="cantidad_vars">Con cuántas variables trabajará la operación:</label>
+        <input type="text" id="cantidad_vars" name="cantidad_vars"><br><br>
+        <label for="operacion">Ingrese la operación lógica a realizar:</label>
+        <input type="text" id="operacion" name="operacion"><br><br>
+        <div class="button-container">
+            <button type="submit" class="calculate-button">Calcular</button>
+            <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
+            <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        </div>
+    </form>
+    {% if tabla_html %}
+        <h2 id="result-title">Resultado de la operación lógica: {{ operacion }}</h2>
+        <h3 id="evaluation">Evaluación: {{ evaluacion }}</h3>
+        <div id="result-table">{{ tabla_html|safe }}</div>
+    {% endif %}
+
+    <script>
+        function clearForm() {
+            document.getElementById('logic-form').reset();
+            document.getElementById('result-title')?.remove();
+            document.getElementById('evaluation')?.remove();
+            document.getElementById('result-table')?.remove();
+        }
+    </script>
+</body>
+</html>

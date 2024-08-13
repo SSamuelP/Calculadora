@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Booleana</title>
+    <style>
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+        .clear-button {
+            background-color: #dc3545;
+            color: white;
+        }
+        .menu-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .calculate-button {
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora Booleana</h1>
+    <form id="boolean-form" method="POST">
+        <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
+        <input type="text" id="operacion_logica" name="operacion_logica"><br><br>
+        <div class="button-container">
+            <button type="submit" class="calculate-button">Simplificar</button>
+            <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
+            <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        </div>
+    </form>
+    {% if resultado_simplificado %}
+        <h2 id="result-title">Resultado simplificado de la operación booleana: {{ operacion_logica }}</h2>
+        <div id="simplified-result">{{ resultado_simplificado }}</div>
+    {% endif %}
+
+    <script>
+        function clearForm() {
+            document.getElementById('boolean-form').reset();
+            document.getElementById('result-title')?.remove();
+            document.getElementById('simplified-result')?.remove();
+        }
+    </script>
+</body>
+</html>
+

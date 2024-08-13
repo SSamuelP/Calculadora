@@ -1,14 +1,29 @@
-# Calculadora Lógica
+# Calculadora Lógica y Booleana
 
-Este proyecto es una calculadora lógica basada en la web que permite a los usuarios ingresar una operación lógica y la cantidad de variables involucradas para generar una tabla de verdad. También evalúa si la operación es una Tautología o una Contradicción.
+Este proyecto es una aplicación web que incluye dos calculadoras distintas: una calculadora lógica que permite a los usuarios ingresar una operación lógica y la cantidad de variables involucradas para generar una tabla de verdad, y una calculadora booleana que simplifica expresiones lógicas utilizando álgebra booleana.
 
 ## Características
+
+### Calculadora Lógica
 
 - Entrada de la cantidad de variables lógicas (hasta 11 variables: p, q, r, s, t, u, v, w, x, y, z).
 - Entrada de la operación lógica a evaluar.
 - Generación de la tabla de verdad para la operación lógica ingresada.
-- Evaluación de la operación como Tautología o Contradicción.
+- Evaluación de la operación como Tautología, Contradicción o Contingencia.
 - Visualización de los resultados en una tabla HTML estilizada.
+- Botón para borrar la entrada y los resultados.
+
+### Calculadora Booleana
+
+- Entrada de la operación lógica booleana a simplificar.
+- Simplificación de expresiones booleanas.
+- Visualización de la expresión simplificada en la interfaz.
+- Botón para borrar la entrada y los resultados.
+
+### Interfaz de Usuario
+
+- Menú principal que permite al usuario elegir entre la calculadora lógica y la calculadora booleana.
+- Botones estilizados de "Calcular", "Borrar" y "Volver al Menú" en ambas calculadoras.
 
 ## Tecnologías Utilizadas
 
@@ -16,51 +31,73 @@ Este proyecto es una calculadora lógica basada en la web que permite a los usua
 - Flask
 - pandas
 - ttg (Truth Table Generator)
+- sympy
 - HTML/CSS
 
-## Instalación
+# Calculadora Lógica y Booleana
 
-1. Darle click al botoncito verde "<> Code"
+Este proyecto es una aplicación web que incluye dos calculadoras distintas: una calculadora lógica que permite a los usuarios ingresar una operación lógica y la cantidad de variables involucradas para generar una tabla de verdad, y una calculadora booleana que simplifica expresiones lógicas utilizando álgebra booleana.
 
-2. Luego darle click a "open github desktop"
+## Características
 
-3. Luego de abierto github desktop, se da la opción para abrir en "visual studio code"
+### Calculadora Lógica
 
-4. Instalar las dependencias:
+- Entrada de la cantidad de variables lógicas (hasta 11 variables: p, q, r, s, t, u, v, w, x, y, z).
+- Entrada de la operación lógica a evaluar.
+- Generación de la tabla de verdad para la operación lógica ingresada.
+- Evaluación de la operación como Tautología, Contradicción o Contingencia.
+- Visualización de los resultados en una tabla HTML estilizada.
+- Botón para borrar la entrada y los resultados.
 
-    ```en la terminal
-    pip install -r requirements.txt
-    ```
-## Uso
+### Calculadora Booleana
 
-1. Ejecutar la aplicación Flask:
+- Entrada de la operación lógica booleana a simplificar.
+- Simplificación de expresiones booleanas.
+- Visualización de la expresión simplificada en la interfaz.
+- Botón para borrar la entrada y los resultados.
 
-    ```bash
-    python main.py
-    ```
+### Interfaz de Usuario
 
-2. Abrir un navegador web y navegar a `http://127.0.0.1:5000/`.
+- Menú principal que permite al usuario elegir entre la calculadora lógica y la calculadora booleana.
+- Botones estilizados de "Calcular", "Borrar" y "Volver al Menú" en ambas calculadoras.
 
-3. Ingresar la cantidad de variables con las que se trabajará y la operación lógica a realizar, luego hacer clic en "Calcular".
+## Tecnologías Utilizadas
 
-4. Ver los resultados de la operación lógica y la evaluación en la tabla generada.
+- Python
+- Flask
+- pandas
+- ttg (Truth Table Generator)
+- sympy
+- HTML/CSS
 
-## Archivos del Proyecto
+Algunos ejercicios de algebra de boole con su respuesta:
 
-- `main.py`: Archivo principal de la aplicación Flask que maneja las solicitudes y genera la tabla de verdad.
-- `templates/index.html`: Plantilla HTML que muestra el formulario de entrada y los resultados de la operación lógica.
-- `requirements.txt`: Archivo que contiene las dependencias necesarias para el proyecto.
+- Ejercicio 1:
 
-## Ejemplo de Operaciones Lógicas
+Expresión: (a and b) or (not c)
+Respuesta simplificada: a · b + ~c
 
-Algunas operaciones lógicas que se pueden ingresar:
+- Ejercicio 2:
 
-- `p and q`
-- `p or q`
-- `not p`
-- `p and (q or r)`
-- `(p => q) and (q => r)`
-- `(~p and r)`
+Expresión: A & B | ~A & C
+Respuesta simplificada: A
+
+- Ejercicio 3:
+
+Expresión: A | A & B
+Respuesta simplificada: A
+
+- Ejercicio 4:
+
+Expresión: a and (not a or b)
+Respuesta simplificada: a · b
+
+- Ejercicio 5:
+
+Expresión: A & (B | C)
+Respuesta simplificada: A · (B + C)
+
+
 
 ## Contribuciones
 
