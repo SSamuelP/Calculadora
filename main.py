@@ -1,8 +1,9 @@
 import ttg
-from flask import Flask, render_template, request
 import pandas as pd
 import boolean
 from booleana import simplificar_operacion
+from flask import Flask, render_template, request
+from logica import calculadora_logica
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -22,15 +23,8 @@ def calc_logica():
         cantidad_vars = int(request.form['cantidad_vars'])
         operacion = request.form['operacion']
         
-        variables_usar = [VARIABLES_CONST[i] for i in range(cantidad_vars)]
-        
-        resultado = ttg.Truths(variables_usar, [operacion], ascending=True)
-        resultado_df = resultado.as_pandas
-        
-        evaluacion = resultado.valuation()
-        
-        tabla_html = resultado_df.to_html(classes='data', header=True, index=False)
-        
+        tabla_html, evaluacion = calculadora_logica(cantidad_vars, operacion)
+
         return render_template('calc_logica.html', 
                                tabla_html=tabla_html, 
                                evaluacion=evaluacion,
