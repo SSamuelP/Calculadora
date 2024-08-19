@@ -4,6 +4,7 @@ import boolean
 from booleana import simplificar_operacion
 from flask import Flask, render_template, request
 from logica import calculadora_logica
+from logica_especifica import calculadora_logica_especifica
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -30,6 +31,19 @@ def calc_logica():
                                evaluacion=evaluacion,
                                operacion=operacion)
     return render_template('calc_logica.html')
+
+#Calculadora lógica casos especificos
+@app.route('/calc_logica_esp', methods=['GET', 'POST'])
+def calc_logica_casos():
+    if request.method == 'POST':
+        cantidad_vars = int(request.form['cantidad_vars'])
+        operacion = request.form['operacion']
+        tabla_html = calculadora_logica_especifica(cantidad_vars, operacion)
+
+        return render_template('calc_logica_esp.html', 
+                               tabla_html=tabla_html, 
+                               operacion=operacion)
+    return render_template('calc_logica_esp.html')
 
 #Calculadora booleana
 @app.route('/calculadora_booleana', methods=['GET', 'POST'])
