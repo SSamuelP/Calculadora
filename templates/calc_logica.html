@@ -5,44 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Lógica</title>
     <style>
-        .dataframe {
-            width: 50%;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-        .dataframe th, .dataframe td {
-            border: 1px solid black;
-            padding: 8px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            background-color: #f8f9fa;
+            background-image: url('/static/css/imagenes/logicas.png');
+            background-position: center center; 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            color: #333;
+            margin: 0;
+            padding: 20px;
         }
-        .dataframe th {
-            background-color: #f2f2f2;
+        h1 {
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+        }
+        label {
+            font-size: 16px;
+            color: #495057;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            box-sizing: border-box;
         }
         .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
             margin-top: 20px;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
+            flex: 1;
+            padding: 12px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
             border: none;
-        }
-        .clear-button {
-            background-color: #dc3545;
-            color: white;
-        }
-        .menu-button {
-            background-color: #6c757d;
+            transition: background-color 0.3s, transform 0.3s;
             color: white;
         }
         .calculate-button {
-            background-color: #007bff;
-            color: white;
+            background-color: #0056b3; 
+        }
+        .clear-button {
+            background-color: #007bff; 
+        }
+        .menu-button {
+            background-color: #33a1ff; 
         }
         button:hover {
-            opacity: 0.8;
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        #result-title {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #17a2b8;
+        }
+        #evaluation {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #495057;
+        }
+        #result-table {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+            background-color: #fff; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        .dataframe {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #fff; 
+        }
+        .dataframe th, .dataframe td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .dataframe th {
+            background-color: #007bff; 
+            color: white;
         }
     </style>
 </head>
@@ -50,9 +121,11 @@
     <h1>Calculadora Lógica</h1>
     <form id="logic-form" method="POST">
         <label for="cantidad_vars">Con cuántas variables trabajará la operación:</label>
-        <input type="text" id="cantidad_vars" name="cantidad_vars"><br><br>
+        <input type="text" id="cantidad_vars" name="cantidad_vars" placeholder="Ejemplo: 3">
+        
         <label for="operacion">Ingrese la operación lógica a realizar:</label>
-        <input type="text" id="operacion" name="operacion"><br><br>
+        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C">
+        
         <div class="button-container">
             <button type="submit" class="calculate-button">Calcular</button>
             <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
@@ -75,3 +148,4 @@
     </script>
 </body>
 </html>
+

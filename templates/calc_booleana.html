@@ -5,31 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Booleana</title>
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            background-image: url('/static/css/imagenes/booleana.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            padding-top: 150px; 
+        }
+        h1 {
+            font-size: 36px;
+            color: #28a745; 
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+        }
+        label {
+            font-size: 16px;
+            color: #495057;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
         .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
             margin-top: 20px;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
+            flex: 1;
+            padding: 12px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
             border: none;
-        }
-        .clear-button {
-            background-color: #dc3545;
-            color: white;
-        }
-        .menu-button {
-            background-color: #6c757d;
+            transition: background-color 0.3s, transform 0.3s;
             color: white;
         }
         .calculate-button {
-            background-color: #007bff;
-            color: white;
+            background-color: #218838; 
+        }
+        .clear-button {
+            background-color: #28a745; 
+        }
+        .menu-button {
+            background-color: #5bc263; 
         }
         button:hover {
-            opacity: 0.8;
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        #result-title {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #20c997; 
+        }
+        #simplified-result {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #495057;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -37,13 +98,15 @@
     <h1>Calculadora Booleana</h1>
     <form id="boolean-form" method="POST">
         <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
-        <input type="text" id="operacion_logica" name="operacion_logica"><br><br>
+        <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + AB'"><br><br>
+        
         <div class="button-container">
             <button type="submit" class="calculate-button">Simplificar</button>
             <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
             <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
         </div>
     </form>
+    
     {% if resultado_simplificado %}
         <h2 id="result-title">Resultado simplificado de la operación booleana: {{ operacion_logica }}</h2>
         <div id="simplified-result">{{ resultado_simplificado }}</div>
@@ -58,4 +121,3 @@
     </script>
 </body>
 </html>
-
