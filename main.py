@@ -1,10 +1,9 @@
-import ttg
-import pandas as pd
 import boolean
 from booleana import simplificar_operacion
 from flask import Flask, render_template, request
 from logica import calculadora_logica
 from logica_especifica import calculadora_logica_especifica
+from conversor_bases import convert_to_bases
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -57,5 +56,16 @@ def calc_booleana():
                                resultado_simplificado=resultado_simplificado)
     return render_template("calc_booleana.html")
 
+#Calculadora de bases
+@app.route('/convert')
+def converter():
+    return render_template('complemento_convert.html')
+
+@app.route('/convert', methods=['POST'])
+def convert():
+    number = request.form['number']
+    result = convert_to_bases(number)
+    return result
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host= "0.0.0.0", port = 5000, debug=True)
