@@ -1,77 +1,58 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Lógica para casos especificos</title>
-    <style>
-        .dataframe {
-            width: 50%;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-        .dataframe th, .dataframe td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        .dataframe th {
-            background-color: #f2f2f2;
-        }
-        .button-container {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-        }
-        .clear-button {
-            background-color: #dc3545;
-            color: white;
-        }
-        .menu-button {
-            background-color: #6c757d;
-            color: white;
-        }
-        .calculate-button {
-            background-color: #007bff;
-            color: white;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-    </style>
-</head>
-<body>
-    <h1>Calculadora Lógica especifica</h1>
-    <form id="logic-form" method="POST">
-        <label for="cantidad_vars">Con cuántas variables trabajará la operación:</label>
-        <input type="text" id="cantidad_vars" name="cantidad_vars"><br><br>
-        <label for="operacion">Ingrese la operación lógica a realizar:</label>
-        <input type="text" id="operacion" name="operacion"><br><br>
-        <div class="button-container">
-            <button type="submit" class="calculate-button">Calcular</button>
-            <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
-            <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
-        </div>
-    </form>
-    {% if tabla_html %}
-        <h2 id="result-title">Resultado de la operación lógica: {{ operacion }}</h2>
-        <h3 id="evaluation">Evaluación: {{ evaluacion }}</h3>
-        <div id="result-table">{{ tabla_html|safe }}</div>
-    {% endif %}
-
+    <title>Calculadora Lógica</title>
     <script>
-        function clearForm() {
-            document.getElementById('logic-form').reset();
-            document.getElementById('result-title')?.remove();
-            document.getElementById('evaluation')?.remove();
-            document.getElementById('result-table')?.remove();
+        function generarCampos() {
+            const numCampos = document.getElementById('cant_vars').value;
+            const contenedor = document.getElementById('contenedorCampos');
+            contenedor.innerHTML = '';
+
+            for (let i = 0; i < numCampos; i++) {
+                const label = document.createElement('label');
+                label.innerHTML = `Valor ${i + 1} (${String.fromCharCode(112 + i)}): `;
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.name = `valor_${i}`;
+                input.min = '0';
+                input.max = '1';
+                input.required = true;
+
+                contenedor.appendChild(label);
+                contenedor.appendChild(input);
+                contenedor.appendChild(document.createElement('br'));
+            }
         }
     </script>
+</head>
+<body>
+    <h1>Calculadora Lógica</h1>
+    <form method="POST">
+        <label for="cant_vars">Cantidad de Variables:</label>
+        <input type="number" id="cant_vars" name="cant_vars" min="1" max="12" required onchange="generarCampos()">
+        <br><br>
+
+        <label for="operacion">Operación Lógica:</label>
+        <input type="text" id="operacion" name="operacion" required>
+        <br><br>
+
+        <div id="contenedorCampos">
+            <!-- Aquí se generarán los campos de entrada para los valores de las variables -->
+        </div>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+
+    {% if resultado %}
+        <h2>Resultado:</h2>
+        <div>{{ resultado | safe }}</div>
+    {% endif %}
 </body>
 </html>

@@ -32,16 +32,25 @@ def calc_logica():
     return render_template('calc_logica.html')
 
 #Calculadora lógica casos especificos
-@app.route('/calc_logica_esp', methods=['GET', 'POST'])
-def calc_logica_casos():
+@app.route('/calculadora_logica_especifica', methods=['GET', 'POST'])
+def calc_logica_esp():
     if request.method == 'POST':
-        cantidad_vars = int(request.form['cantidad_vars'])
-        operacion = request.form['operacion']
-        tabla_html = calculadora_logica_especifica(cantidad_vars, operacion)
+        try:
+            cant_vars = int(request.form['cant_vars'])
+            variables_usar = [VARIABLES_CONST[i] for i in range(cant_vars)]
+            operacion = request.form['operacion']
+            evaluar = [
+                int(request.form[f'valor_{i}']) for i in range(cant_vars)
+            ]
 
-        return render_template('calc_logica_esp.html', 
-                               tabla_html=tabla_html, 
-                               operacion=operacion)
+            resultado = calculadora_logica_especifica(variables_usar,
+                                                      operacion, evaluar)
+            return render_template('calc_logica_esp.html',
+                                   resultado=resultado,
+                                   cant_vars=cant_vars)
+        except Exception as e:
+            return render_template('calc_logica_esp.html', error=str(e), cant_vars=0)
+
     return render_template('calc_logica_esp.html')
 
 #Calculadora booleana
