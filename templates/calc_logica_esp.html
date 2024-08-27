@@ -1,9 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Lógica</title>
+    <title>Calculadora Lógica Especifica</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            background-image: url('/static/css/imagenes/especifica.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #6f42c1; 
+            margin-bottom: 20px;
+            margin-top: 100px; 
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+            margin-top: 40px; 
+        }
+        label {
+            font-size: 16px;
+            color: #6c757d;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="number"], input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+        }
+        .calculate-button {
+            background-color: #6f42c1; 
+        }
+        .clear-button {
+            background-color: #7952b3; 
+        }
+        .menu-button {
+            background-color: #8a63d2; 
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        #result-title {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #563d7c; 
+        }
+        #evaluation {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #6c757d;
+        }
+        #result-table {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .dataframe {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #fff;
+        }
+        .dataframe th, .dataframe td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .dataframe th {
+            background-color: #6f42c1; 
+            color: white;
+        }
+    </style>
     <script>
         function generarCampos() {
             const numCampos = document.getElementById('cant_vars').value;
@@ -26,24 +140,31 @@
                 contenedor.appendChild(document.createElement('br'));
             }
         }
+
+        function clearForm() {
+            document.getElementById('logic-form').reset();
+            document.getElementById('contenedorCampos').innerHTML = '';
+        }
     </script>
 </head>
 <body>
-    <h1>Calculadora Lógica</h1>
-    <form method="POST">
+    <h1>Calculadora Lógica Especifica</h1>
+    <form id="logic-form" method="POST">
         <label for="cant_vars">Cantidad de Variables:</label>
         <input type="number" id="cant_vars" name="cant_vars" min="1" max="12" required onchange="generarCampos()">
-        <br><br>
 
         <label for="operacion">Operación Lógica:</label>
-        <input type="text" id="operacion" name="operacion" required>
-        <br><br>
-
+        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C" required>
+        
         <div id="contenedorCampos">
             <!-- Aquí se generarán los campos de entrada para los valores de las variables -->
         </div>
 
-        <button type="submit">Calcular</button>
+        <div class="button-container">
+            <button type="submit" class="calculate-button">Calcular</button>
+            <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
+            <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        </div>
     </form>
 
     {% if error %}
@@ -51,8 +172,9 @@
     {% endif %}
 
     {% if resultado %}
-        <h2>Resultado:</h2>
-        <div>{{ resultado | safe }}</div>
+        <h2 id="result-title">Resultado:</h2>
+        <div id="result-table">{{ resultado | safe }}</div>
     {% endif %}
 </body>
 </html>
+
