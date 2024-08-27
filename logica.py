@@ -12,6 +12,7 @@ def verificar_not(ecuacion):
     return None
 
 def calculadora_logica(cant_variables, ecuacion):
+    ecuacion = ecuacion.replace("∧", "and").replace("∨", "or").replace("¬", "not ")
     parte_ecuaciones = []
 
     variables_usar = [VARIABLES_CONST[i] for i in range(cant_variables)]
