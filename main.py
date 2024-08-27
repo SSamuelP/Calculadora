@@ -58,11 +58,12 @@ def calc_logica_esp():
 def calc_booleana():
     if request.method == "POST":
         operacion_logica = str(request.form["operacion_logica"])
-        resultado_simplificado = simplificar_operacion(operacion_logica)
+        tabla_booleana, resultado_simplificado = simplificar_operacion(operacion_logica)
 
         return render_template("calc_booleana.html", 
                                operacion_logica=operacion_logica, 
-                               resultado_simplificado=resultado_simplificado)
+                               resultado_simplificado=resultado_simplificado,
+                               tabla_booleana = tabla_booleana)
     return render_template("calc_booleana.html")
 
 #Calculadora de bases
