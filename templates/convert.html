@@ -1,18 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Conversor de números</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Números</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            width: 80%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #495057;
+            margin: 10px 0;
+        }
+        span {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="number" oninput="update()">
-    <p>Binario: <span id="binary"></span></p>
-    <p>Octal:   <span id="octal"></span></p>
-    <p>Hexadecimal: <span id="hexadecimal"></span></p>
+    <h1>Conversor de Números</h1>
+    <input type="text" id="number" placeholder="Ingresa un número decimal" oninput="update()">
+    <p>Binario: <span id="binary">N/A</span></p>
+    <p>Octal: <span id="octal">N/A</span></p>
+    <p>Hexadecimal: <span id="hexadecimal">N/A</span></p>
 
     <script>
         function update() {
             var number = document.getElementById("number").value;
+            if (!number) {
+                // Si no hay entrada, restablece los valores
+                document.getElementById("binary").textContent = 'N/A';
+                document.getElementById("octal").textContent = 'N/A';
+                document.getElementById("hexadecimal").textContent = 'N/A';
+                return;
+            }
+
             $.ajax({
                 url: '/convert',
                 type: 'POST',
