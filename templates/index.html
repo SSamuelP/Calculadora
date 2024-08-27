@@ -43,6 +43,7 @@
             display: flex;
             justify-content: center;
             gap: 20px;
+            flex-wrap: wrap; /* Permitir que los botones se ajusten si hay más de dos */
         }
         .button {
             padding: 15px 40px;
@@ -54,12 +55,20 @@
             color: white;
             text-transform: uppercase;
             letter-spacing: 1px;
+            flex: 1;
+            min-width: 250px; /* Asegurar que los botones tengan un tamaño mínimo */
         }
         .logic-button {
             background-color: #007bff;
         }
         .boolean-button {
             background-color: #28a745;
+        }
+        .logic-esp-button {
+            background-color: #6f42c1;
+        }
+        .convert-button {
+            background-color: #17a2b8;
         }
         .button:hover {
             opacity: 0.9;
@@ -83,7 +92,12 @@
             <form action="/calculadora_booleana" method="get">
                 <button type="submit" class="button boolean-button">Calculadora Booleana</button>
             </form>
-
+            <form action="/calculadora_logica_especifica" method="get">
+                <button type="submit" class="button logic-esp-button">Calculadora Lógica Específica</button>
+            </form>
+            <form action="/convert" method="get">
+                <button type="submit" class="button convert-button">Conversor de Bases</button>
+            </form>
         </div>
     </main>
 </body>

@@ -65,16 +65,36 @@ def calc_booleana():
                                resultado_simplificado=resultado_simplificado)
     return render_template("calc_booleana.html")
 
-#Calculadora de bases
-@app.route('/convert')
-def converter():
-    return render_template('complemento_convert.html')
+# Ruta para la calculadora lógica específica
+@app.route('/calculadora_logica_especifica', methods=['GET', 'POST'])
+def calc_logica_especifica():
+    if request.method == 'POST':
+        try:
+            cant_vars = int(request.form['cant_vars'])
+            variables_usar = [VARIABLES_CONST[i] for i in range(cant_vars)]
+            operacion = request.form['operacion']
+            evaluar = [
+                int(request.form[f'valor_{i}']) for i in range(cant_vars)
+            ]
 
-@app.route('/convert', methods=['POST'])
-def convert():
-    number = request.form['number']
-    result = convert_to_bases(number)
-    return result
+            resultado = calculadora_logica_especifica(variables_usar,
+                                                      operacion, evaluar)
+            return render_template('calc_logica_esp.html',
+                                   resultado=resultado,
+                                   cant_vars=cant_vars)
+        except Exception as e:
+            return render_template('calc_logica_esp.html', error=str(e), cant_vars=0)
+
+    return render_template('calc_logica_esp.html')
+
+#Calculadora de bases
+@app.route('/convert', methods=['GET', 'POST'])
+def converter():
+    if request.method == 'POST':
+        number = request.form['number']
+        result = convert_to_bases(number)
+        return result  # Retornar directamente el resultado en formato JSON para ser usado por el front-end
+    return render_template('convert.html')  # Renderizar solo un archivo HTML unificado
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
