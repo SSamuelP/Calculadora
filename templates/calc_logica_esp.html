@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Lógica Especifica</title>
     <style>
+        /* Estilos existentes */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -52,7 +53,8 @@
         }
         .button-container {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap; /* Permite que los botones se ajusten en filas */
+            justify-content: center; /* Centra los botones horizontalmente */
             gap: 10px;
             margin-top: 20px;
         }
@@ -67,13 +69,19 @@
             color: white;
         }
         .calculate-button {
-            background-color: #6f42c1; 
+            background-color: #6f42c1; /* Morado oscuro */
         }
         .clear-button {
-            background-color: #7952b3; 
+            background-color: #5a3d99; /* Morado medio */
         }
         .menu-button {
-            background-color: #8a63d2; 
+            background-color: #7c4fb3; /* Morado intermedio */
+        }
+        .logic-button {
+            background-color: #9b59b6; /* Morado claro */
+        }
+        .var-button {
+            background-color: #8e44ad; /* Otro tono de morado */
         }
         button:hover {
             opacity: 0.9;
@@ -119,6 +127,7 @@
         }
     </style>
     <script>
+        // Función para generar campos de valores
         function generarCampos() {
             const numCampos = document.getElementById('cant_vars').value;
             const contenedor = document.getElementById('contenedorCampos');
@@ -141,9 +150,20 @@
             }
         }
 
+        // Función para limpiar el formulario
         function clearForm() {
             document.getElementById('logic-form').reset();
             document.getElementById('contenedorCampos').innerHTML = '';
+        }
+
+        // Función para insertar texto en el campo de operación lógica
+        function insertAtCursor(value) {
+            const input = document.getElementById('operacion');
+            const startPos = input.selectionStart;
+            const endPos = input.selectionEnd;
+            input.value = input.value.substring(0, startPos) + value + input.value.substring(endPos, input.value.length);
+            input.setSelectionRange(startPos + value.length, startPos + value.length);
+            input.focus();
         }
     </script>
 </head>
@@ -156,6 +176,21 @@
         <label for="operacion">Operación Lógica:</label>
         <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C" required>
         
+        <!-- Contenedor de botones para insertar operadores y variables -->
+        <div class="button-container">
+            <button type="button" class="logic-button" onclick="insertAtCursor(' and ')">AND</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(' or ')">OR</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(' not ')">NOT</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(' xor ')">XOR</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(' => ')">=&gt;</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(' = ')">=</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('p')">p</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('q')">q</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('r')">r</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('s')">s</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('t')">t</button>
+        </div>
+
         <div id="contenedorCampos">
             <!-- Aquí se generarán los campos de entrada para los valores de las variables -->
         </div>
@@ -177,4 +212,5 @@
     {% endif %}
 </body>
 </html>
+
 

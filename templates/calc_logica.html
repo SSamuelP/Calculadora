@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Lógica</title>
     <style>
+        /* Estilos existentes se mantienen */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -115,6 +116,30 @@
             background-color: #007bff; 
             color: white;
         }
+        
+        /* Nuevos estilos para los botones lógicos */
+        .logic-button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .logic-button {
+            padding: 8px 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff; 
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        .logic-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +150,25 @@
         
         <label for="operacion">Ingrese la operación lógica a realizar:</label>
         <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C">
+
+        <!-- Nueva sección de botones lógicos -->
+        <div class="logic-button-container">
+            <!-- Botones para operadores -->
+            <button type="button" class="logic-button" onclick="insertAtCursor('∧')">∧</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('∨')">∨</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('=>')">=></button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('=')">=</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('⊕')">⊕</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('¬')">¬</button>
+            
+            <!-- Botones para variables -->
+            <button type="button" class="logic-button" onclick="insertAtCursor('p')">p</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('q')">q</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('r')">r</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('s')">s</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('t')">t</button>
+        </div>
+        <!-- Fin de la sección de botones lógicos -->
         
         <div class="button-container">
             <button type="submit" class="calculate-button">Calcular</button>
@@ -139,6 +183,18 @@
     {% endif %}
 
     <script>
+        // Función para insertar el texto en la posición del cursor
+        function insertAtCursor(value) {
+            const input = document.getElementById('operacion');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const text = input.value;
+            input.value = text.slice(0, start) + value + text.slice(end);
+            input.focus();
+            input.selectionStart = input.selectionEnd = start + value.length;
+        }
+
+        // Función para limpiar el formulario
         function clearForm() {
             document.getElementById('logic-form').reset();
             document.getElementById('result-title')?.remove();
@@ -148,4 +204,3 @@
     </script>
 </body>
 </html>
-

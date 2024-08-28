@@ -51,34 +51,27 @@
         }
         .button-container {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 10px;
             margin-top: 20px;
         }
-        button {
-            flex: 1;
-            padding: 12px;
+        .btn {
+            padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
-            border: none;
-            transition: background-color 0.3s, transform 0.3s;
-            color: white;
-        }
-        .calculate-button {
-            background-color: #218838; 
-        }
-        .clear-button {
+            border: 1px solid #ced4da;
             background-color: #28a745; 
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 50px;
         }
-        .menu-button {
-            background-color: #5bc263; 
-        }
-        button:hover {
+        .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
         }
-        button:active {
+        .btn:active {
             transform: translateY(0);
         }
         #result-title {
@@ -125,6 +118,20 @@
         <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
         <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + AB'"><br><br>
         
+        <!-- Botones para símbolos lógicos -->
+        <div class="button-container">
+            <button type="button" class="btn" onclick="insertSymbol('+')">+</button>
+            <button type="button" class="btn" onclick="insertSymbol('·')">·</button>
+            <button type="button" class="btn" onclick="insertSymbol('¬')">¬</button>
+            <button type="button" class="btn" onclick="insertSymbol('⊕')">⊕</button>
+            <button type="button" class="btn" onclick="insertSymbol('(')">(</button>
+            <button type="button" class="btn" onclick="insertSymbol(')')">)</button>
+            <button type="button" class="btn" onclick="insertSymbol('A')">A</button>
+            <button type="button" class="btn" onclick="insertSymbol('B')">B</button>
+            <button type="button" class="btn" onclick="insertSymbol('C')">C</button>
+            <button type="button" class="btn" onclick="insertSymbol('D')">D</button>
+        </div>
+
         <div class="button-container">
             <button type="submit" class="calculate-button">Simplificar</button>
             <button type="button" class="clear-button" onclick="clearForm()">Borrar</button>
@@ -138,10 +145,15 @@
     {% endif %}
 
     {% if tabla_booleana %}
-        <h2 id="result-title">Resultado de la operación lógica: {{ operacion_logica }}</h2>
         <div id="result-table">{{ tabla_booleana | safe }}</div>
     {% endif %}
+    
     <script>
+        function insertSymbol(symbol) {
+            const input = document.getElementById('operacion_logica');
+            input.value += symbol;
+        }
+
         function clearForm() {
             document.getElementById('boolean-form').reset();
             document.getElementById('result-title')?.remove();
