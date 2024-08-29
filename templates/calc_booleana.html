@@ -67,12 +67,35 @@
             transition: background-color 0.3s, transform 0.3s;
             width: 50px;
         }
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+        }
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
         }
         .btn:active {
             transform: translateY(0);
+        }
+        .calculate-button {
+            background-color: #0b551c; 
+        }
+        .clear-button {
+            background-color: #1c8835; 
+        }
+        .menu-button {
+            background-color: #008d21; 
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
         #result-title {
             margin-top: 30px;
@@ -116,7 +139,7 @@
     <h1>Calculadora Booleana</h1>
     <form id="boolean-form" method="POST">
         <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
-        <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + AB'"><br><br>
+        <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + A·B'"><br><br>
         
         <!-- Botones para símbolos lógicos -->
         <div class="button-container">
