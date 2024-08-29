@@ -9,7 +9,7 @@ algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
 
 # Definimos constantes
-VARIABLES_CONST: tuple[str] = ("p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+VARIABLES_CONST: tuple[str] = ("P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 
 #Menú principal
 @app.route('/', methods=['GET', 'POST'])
@@ -30,28 +30,6 @@ def calc_logica():
                                operacion=operacion)
     return render_template('calc_logica.html')
 
-#Calculadora lógica casos especificos
-@app.route('/calculadora_logica_especifica', methods=['GET', 'POST'])
-def calc_logica_esp():
-    if request.method == 'POST':
-        try:
-            cant_vars = int(request.form['cant_vars'])
-            variables_usar = [VARIABLES_CONST[i] for i in range(cant_vars)]
-            operacion = request.form['operacion']
-            evaluar = [
-                int(request.form[f'valor_{i}']) for i in range(cant_vars)
-            ]
-
-            resultado = calculadora_logica_especifica(variables_usar,
-                                                      operacion, evaluar)
-            return render_template('calc_logica_esp.html',
-                                   resultado=resultado,
-                                   cant_vars=cant_vars)
-        except Exception as e:
-            return render_template('calc_logica_esp.html', error=str(e), cant_vars=0)
-
-    return render_template('calc_logica_esp.html')
-
 #Calculadora booleana
 @app.route('/calculadora_booleana', methods=['GET', 'POST'])
 def calc_booleana():
@@ -65,7 +43,7 @@ def calc_booleana():
                                tabla_booleana = tabla_booleana)
     return render_template("calc_booleana.html")
 
-# Ruta para la calculadora lógica específica
+#Calculadora lógica casos especificos
 @app.route('/calculadora_logica_especifica', methods=['GET', 'POST'])
 def calc_logica_especifica():
     if request.method == 'POST':
@@ -77,10 +55,11 @@ def calc_logica_especifica():
                 int(request.form[f'valor_{i}']) for i in range(cant_vars)
             ]
 
-            resultado = calculadora_logica_especifica(variables_usar,
+            resultado, resultado_completo = calculadora_logica_especifica(variables_usar,
                                                       operacion, evaluar)
             return render_template('calc_logica_esp.html',
                                    resultado=resultado,
+                                   resultado_completo = resultado_completo,
                                    cant_vars=cant_vars)
         except Exception as e:
             return render_template('calc_logica_esp.html', error=str(e), cant_vars=0)

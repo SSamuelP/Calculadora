@@ -174,21 +174,23 @@
         <input type="number" id="cant_vars" name="cant_vars" min="1" max="12" required onchange="generarCampos()">
 
         <label for="operacion">Operación Lógica:</label>
-        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C" required>
+        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: P ∧ Q ∨ ¬R" required>
         
         <!-- Contenedor de botones para insertar operadores y variables -->
         <div class="button-container">
-            <button type="button" class="logic-button" onclick="insertAtCursor(' and ')">AND</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(' or ')">OR</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(' not ')">NOT</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(' xor ')">XOR</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(' => ')">=&gt;</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(' = ')">=</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('p')">p</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('q')">q</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('r')">r</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('s')">s</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('t')">t</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('∧ ')">AND</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('∨ ')">OR</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('¬')">NOT</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('xor ')">XOR</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('=> ')">=&gt;</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('= ')">=</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('P ')">P</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('Q ')">Q</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('R ')">R</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('S ')">S</button>
+            <button type="button" class="var-button" onclick="insertAtCursor('T ')">T</button>
         </div>
 
         <div id="contenedorCampos">
@@ -209,6 +211,11 @@
     {% if resultado %}
         <h2 id="result-title">Resultado:</h2>
         <div id="result-table">{{ resultado | safe }}</div>
+    {% endif %}
+
+    {% if resultado_completo %}
+        <h2 id="result-title">Tabla Completa:</h2>
+        <div id="result-table">{{ resultado_completo | safe }}</div>
     {% endif %}
 </body>
 </html>
