@@ -145,11 +145,8 @@
 <body>
     <h1>Calculadora Lógica</h1>
     <form id="logic-form" method="POST">
-        <label for="cantidad_vars">Con cuántas variables trabajará la operación:</label>
-        <input type="text" id="cantidad_vars" name="cantidad_vars" placeholder="Ejemplo: 3">
-        
         <label for="operacion">Ingrese la operación lógica a realizar:</label>
-        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: A ∧ B ∨ ¬C">
+        <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: P ∧ Q ∨ ¬R">
 
         <!-- Nueva sección de botones lógicos -->
         <div class="logic-button-container">
@@ -160,13 +157,15 @@
             <button type="button" class="logic-button" onclick="insertAtCursor('=')">=</button>
             <button type="button" class="logic-button" onclick="insertAtCursor('⊕')">⊕</button>
             <button type="button" class="logic-button" onclick="insertAtCursor('¬')">¬</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
             
             <!-- Botones para variables -->
-            <button type="button" class="logic-button" onclick="insertAtCursor('p')">p</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('q')">q</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('r')">r</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('s')">s</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('t')">t</button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('P')">P </button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('Q')">Q </button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('R')">R </button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('S')">S </button>
+            <button type="button" class="logic-button" onclick="insertAtCursor('T')">T </button>
         </div>
         <!-- Fin de la sección de botones lógicos -->
         

@@ -20,10 +20,9 @@ def index():
 @app.route('/calculadora_logica', methods=['GET', 'POST'])
 def calc_logica():
     if request.method == 'POST':
-        cantidad_vars = int(request.form['cantidad_vars'])
         operacion = request.form['operacion']
         
-        tabla_html, evaluacion = calculadora_logica(cantidad_vars, operacion)
+        tabla_html, evaluacion = calculadora_logica(operacion)
 
         return render_template('calc_logica.html', 
                                tabla_html=tabla_html, 

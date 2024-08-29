@@ -1,6 +1,5 @@
 import ttg
 
-VARIABLES_CONST = ("p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 EVALUACION: dict[str] = {"Contingency": "Contingencia", "Tautology": "Tautología", "Contradiction": "Contradicción"}
 
 def verificar_not(ecuacion):
@@ -8,14 +7,20 @@ def verificar_not(ecuacion):
   for i in range(ecuacion.count("not")):
     ubicacion_not = ecuacion.find("not")
     if ubicacion_not != -1:
-        return ecuacion[ubicacion_not: ubicacion_not + 5]
+        return ecuacion[ubicacion_not:] #Dada que la ecuación que es enviada acá está separada por l
     return None
 
-def calculadora_logica(cant_variables, ecuacion):
+def calculadora_logica(ecuacion):
     ecuacion = ecuacion.replace("∧", "and").replace("∨", "or").replace("¬", "not ")
     parte_ecuaciones = []
 
-    variables_usar = [VARIABLES_CONST[i] for i in range(cant_variables)]
+    lista_variables = []
+    for letra in ecuacion:
+        if letra == "P" or letra == "Q" or letra == "R" or letra == "S" or letra == "T" or letra == "U" or letra == "V" or letra == "W" or letra == "X" or letra == "Y" or letra == "Z":
+            if letra in lista_variables:
+                pass
+            else:
+              lista_variables.append(letra) 
 
     ecuacion_separada = ecuacion.split(")")
     negaciones = list(map(verificar_not, ecuacion_separada))
@@ -26,6 +31,9 @@ def calculadora_logica(cant_variables, ecuacion):
 
     for elemento in ecuacion_separada:
         if elemento.strip():
+          if elemento[0] == " ":
+            pass
+          else:
             parte_ecuaciones.append(elemento)
 
     for index, operacion in enumerate(parte_ecuaciones):
@@ -37,11 +45,15 @@ def calculadora_logica(cant_variables, ecuacion):
     if ecuacion not in parte_ecuaciones:
       parte_ecuaciones.append(ecuacion)
       
-    resultado = ttg.Truths(variables_usar, parte_ecuaciones, ascending=True)
-    resultado_df = resultado.as_pandas
-
-    tabla_html = resultado_df.to_html(classes='data', header=True, index=False)
+    resultado = ttg.Truths(lista_variables, parte_ecuaciones, ascending=True, ints= False)
     evaluacion = resultado.valuation()
+    resultado_df = resultado.as_pandas
+    resultado_df.replace({True: "V", False: "F"}, inplace=True)
+
+    #Por errores de las funciones e iteraciones anteriores pueden haber columnas repetidas, por eso las borramos
+    resultado_df = resultado_df.loc[:, ~resultado_df.columns.duplicated()]
+   
+    tabla_html = resultado_df.to_html(classes='data', header=True, index=False)
     evaluacion_es = EVALUACION[evaluacion]
 
     return tabla_html, evaluacion_es
