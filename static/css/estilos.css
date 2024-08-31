@@ -1,0 +1,39 @@
+/* ESTILOS PARA LOS BOTONES */
+
+/* Contenedor principal de botones lógicos */
+.logic-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra todos los elementos del contenedor */
+    gap: 20px; /* Espacio entre los grupos de botones */
+    margin-bottom: 20px;
+}
+
+/* Contenedor de botones de operadores */
+.operator-buttons,
+.variable-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho */
+}
+
+/* Botones lógicos */
+.logic-button {
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+    text-align: center;
+}
+
+.logic-button:hover {
+    background-color: #0056b3;
+}
+
+

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Lógica Especifica</title>
+
+    <!-- Vinculo del archivo de estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+
     <style>
         /* Estilos existentes */
         body {
@@ -176,21 +180,28 @@
         <label for="operacion">Operación Lógica:</label>
         <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: P ∧ Q ∨ ¬R" required>
         
-        <!-- Contenedor de botones para insertar operadores y variables -->
-        <div class="button-container">
-            <button type="button" class="logic-button" onclick="insertAtCursor('∧ ')">AND</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('∨ ')">OR</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('¬')">NOT</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('xor ')">XOR</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('=> ')">=&gt;</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('= ')">=</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('P ')">P</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('Q ')">Q</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('R ')">R</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('S ')">S</button>
-            <button type="button" class="var-button" onclick="insertAtCursor('T ')">T</button>
+
+        <div class="logic-button-container">
+
+            <div class="operator-buttons">
+                <button type="button" class="logic-button" onclick="insertAtCursor('∧ ')">AND</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('∨ ')">OR</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('¬')">NOT</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('xor ')">XOR</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('=> ')">=&gt;</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('= ')">=</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
+            </div>
+            
+            <div class="variable-buttons">
+                <button type="button" class="var-button" onclick="insertAtCursor('P ')">P</button>
+                <button type="button" class="var-button" onclick="insertAtCursor('Q ')">Q</button>
+                <button type="button" class="var-button" onclick="insertAtCursor('R ')">R</button>
+                <button type="button" class="var-button" onclick="insertAtCursor('S ')">S</button>
+                <button type="button" class="var-button" onclick="insertAtCursor('T ')">T</button>
+            </div>
+
         </div>
 
         <div id="contenedorCampos">

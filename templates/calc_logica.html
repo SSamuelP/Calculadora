@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Lógica</title>
+
+    <!-- Vinculo del archivo de estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    
     <style>
         /* Estilos existentes se mantienen */
         body {
@@ -151,22 +155,27 @@
         <!-- Nueva sección de botones lógicos -->
         <div class="logic-button-container">
             <!-- Botones para operadores -->
-            <button type="button" class="logic-button" onclick="insertAtCursor('∧ ')">∧</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('∨ ')">∨</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('=> ')">=></button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('= ')">=</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('⊕ ')">⊕</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('¬')">¬</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
-            <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
-            
+            <div class="operator-buttons">
+                <button type="button" class="logic-button" onclick="insertAtCursor('∧ ')">∧</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('∨ ')">∨</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('=> ')">=></button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('= ')">=</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('⊕ ')">⊕</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('¬')">¬</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('(')">(</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor(')')">)</button>
+            </div>
+    
             <!-- Botones para variables -->
-            <button type="button" class="logic-button" onclick="insertAtCursor('P ')">P </button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('Q ')">Q </button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('R ')">R </button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('S ')">S </button>
-            <button type="button" class="logic-button" onclick="insertAtCursor('T ')">T </button>
+            <div class="variable-buttons">
+                <button type="button" class="logic-button" onclick="insertAtCursor('P ')">P</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('Q ')">Q</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('R ')">R</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('S ')">S</button>
+                <button type="button" class="logic-button" onclick="insertAtCursor('T ')">T</button>
+            </div>
         </div>
+        
         <!-- Fin de la sección de botones lógicos -->
         
         <div class="button-container">

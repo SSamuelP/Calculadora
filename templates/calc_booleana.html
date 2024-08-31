@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Booleana</title>
+
+    <!-- Vinculo del archivo de estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -141,19 +145,30 @@
         <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
         <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + A·B'"><br><br>
         
-        <!-- Botones para símbolos lógicos -->
-        <div class="button-container">
-            <button type="button" class="btn" onclick="insertSymbol('+')">+</button>
-            <button type="button" class="btn" onclick="insertSymbol('·')">·</button>
-            <button type="button" class="btn" onclick="insertSymbol('¬')">¬</button>
-            <button type="button" class="btn" onclick="insertSymbol('⊕')">⊕</button>
-            <button type="button" class="btn" onclick="insertSymbol('(')">(</button>
-            <button type="button" class="btn" onclick="insertSymbol(')')">)</button>
-            <button type="button" class="btn" onclick="insertSymbol('A')">A</button>
-            <button type="button" class="btn" onclick="insertSymbol('B')">B</button>
-            <button type="button" class="btn" onclick="insertSymbol('C')">C</button>
-            <button type="button" class="btn" onclick="insertSymbol('D')">D</button>
+        <div class="logic-button-container"> 
+
+            <!-- Botones para símbolos lógicos -->
+            <div class="button-container">
+                <button type="button" class="btn" onclick="insertSymbol('+')">+</button>
+                <button type="button" class="btn" onclick="insertSymbol('·')">·</button>
+                <button type="button" class="btn" onclick="insertSymbol('¬')">¬</button>
+                <button type="button" class="btn" onclick="insertSymbol('⊕')">⊕</button>
+                <button type="button" class="btn" onclick="insertSymbol('(')">(</button>
+                <button type="button" class="btn" onclick="insertSymbol(')')">)</button>
+            </div>
+
+            <div class="button-container">   
+                <button type="button" class="btn" onclick="insertSymbol('A')">A</button>
+                <button type="button" class="btn" onclick="insertSymbol('B')">B</button>
+                <button type="button" class="btn" onclick="insertSymbol('C')">C</button>
+                <button type="button" class="btn" onclick="insertSymbol('D')">D</button>
+            </div>
+
         </div>
+
+        
+        
+        
 
         <div class="button-container">
             <button type="submit" class="calculate-button">Simplificar</button>
