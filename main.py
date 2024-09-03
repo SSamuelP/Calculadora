@@ -114,13 +114,16 @@ def evaluador():
 #Graficadora
 @app.route("/graficadora", methods=["GET", "POST"])
 def graficadora():
+    fig = None
+    funcion = ""
+    error = None
 
     if request.method == "POST":
         funcion = request.form.get('funcion', '')
         if funcion:
             fig = graficar_2d(funcion)
 
-    return render_template("graficadora.html", funcion=funcion, fig=fig)
+    return render_template("graficadora.html", funcion=funcion, fig=fig, error=error)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
