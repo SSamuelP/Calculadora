@@ -29,6 +29,7 @@
             margin-bottom: 20px;
         }
         form {
+            position: relative; /* Para permitir que el botón de ayuda se posicione relativo al formulario */
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -38,6 +39,32 @@
             width: 100%;
             text-align: left;
         }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex; /* Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        #help-box {
+            display: none; /* Oculto por defecto */
+            background-color: #dff0d8;
+            color: #28a745;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
         label {
             font-size: 16px;
             color: #495057;
@@ -142,6 +169,19 @@
 <body>
     <h1>Calculadora Booleana</h1>
     <form id="boolean-form" method="POST">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+        
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <p><b>⊕</b> = OR exclusivo (XOR)</p>
+            <p><b>'</b> = Negación lógica (NOT)</p>
+            <p><b>·</b> = AND lógico</p>
+            <p><b>+</b> = OR lógico</p>
+        </div>
+
         <label for="operacion_logica">Ingrese la operación lógica booleana:</label>
         <input type="text" id="operacion_logica" name="operacion_logica" placeholder="Ejemplo: A + A·B'"><br><br>
         
@@ -149,12 +189,12 @@
 
             <!-- Botones para símbolos lógicos -->
             <div class="button-container">
-                <button type="button" class="btn" onclick="insertSymbol('+')">+</button>
-                <button type="button" class="btn" onclick="insertSymbol('·')">·</button>
-                <button type="button" class="btn" onclick="insertSymbol('¬')">¬</button>
-                <button type="button" class="btn" onclick="insertSymbol('⊕')">⊕</button>
-                <button type="button" class="btn" onclick="insertSymbol('(')">(</button>
-                <button type="button" class="btn" onclick="insertSymbol(')')">)</button>
+                <button type="button" class="btn" onclick="insertSymbol(' + ')">+</button>
+                <button type="button" class="btn" onclick="insertSymbol(' · ')">·</button>
+                <button type="button" class="btn" onclick="insertSymbol('\'')">'</button>
+                <button type="button" class="btn" onclick="insertSymbol(' ⊕ ')">⊕</button>
+                <button type="button" class="btn" onclick="insertSymbol(' ( ')">(</button>
+                <button type="button" class="btn" onclick="insertSymbol(' ) ')">)</button>
             </div>
 
             <div class="button-container">   
@@ -165,10 +205,6 @@
             </div>
 
         </div>
-
-        
-        
-        
 
         <div class="button-container">
             <button type="submit" class="calculate-button">Simplificar</button>
@@ -196,6 +232,11 @@
             document.getElementById('boolean-form').reset();
             document.getElementById('result-title')?.remove();
             document.getElementById('simplified-result')?.remove();
+        }
+        // Función para mostrar y ocultar el recuadro de ayuda
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>

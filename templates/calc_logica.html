@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
     
     <style>
-        /* Estilos existentes se mantienen */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -29,6 +28,7 @@
             margin-bottom: 20px;
         }
         form {
+            position: relative; /* Para el botón de ayuda */
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -37,6 +37,31 @@
             max-width: 500px;
             width: 100%;
             text-align: left;
+        }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex; /* Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        #help-box {
+            display: none; /* Oculto por defecto */
+            background-color: #d4e9fa;
+            color: #007bff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
         }
         label {
             font-size: 16px;
@@ -149,6 +174,22 @@
 <body>
     <h1>Calculadora Lógica</h1>
     <form id="logic-form" method="POST">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+        
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <p>Utilice los operadores para construir su expresión lógica:</p>
+            <p><b>∧</b> = Conjunción (AND)</p>
+            <p><b>∨</b> = Disyunción (OR)</p>
+            <p><b>¬</b> = Negación (NOT)</p>
+            <p><b>⊕</b> = OR exclusivo (XOR)</p>
+            <p><b>=></b> = Condicional</p>
+            <p><b>=</b> = Bicondicional</p>
+        </div>
+
         <label for="operacion">Ingrese la operación lógica a realizar:</label>
         <input type="text" id="operacion" name="operacion" placeholder="Ejemplo: P ∧ Q ∨ ¬R">
 
@@ -208,6 +249,11 @@
             document.getElementById('result-title')?.remove();
             document.getElementById('evaluation')?.remove();
             document.getElementById('result-table')?.remove();
+        }
+        // Función para mostrar y ocultar el recuadro de ayuda
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>

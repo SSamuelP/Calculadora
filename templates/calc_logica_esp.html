@@ -30,6 +30,7 @@
             margin-top: 100px; 
         }
         form {
+            position: relative; /* Para permitir que el botón de ayuda se posicione relativo al formulario */
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -38,7 +39,32 @@
             max-width: 500px;
             width: 100%;
             text-align: left;
-            margin-top: 40px; 
+            margin-top: 40px;
+        }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #6f42c1;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex; /* Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        #help-box {
+            display: none; /* Oculto por defecto */
+            background-color: #e6e0f8;
+            color: #6f42c1;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
         }
         label {
             font-size: 16px;
@@ -169,11 +195,35 @@
             input.setSelectionRange(startPos + value.length, startPos + value.length);
             input.focus();
         }
+
+        // Función para mostrar y ocultar el recuadro de ayuda
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
+        }
+
     </script>
 </head>
 <body>
     <h1>Calculadora Lógica Especifica</h1>
     <form id="logic-form" method="POST">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+        
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <p>Use los operadores AND, OR, NOT, XOR para construir su expresión lógica.</p>
+            <p><b>AND</b> = Conjunción </p>
+            <p><b>OR</b> = Disyunción </p>
+            <p><b>NOT</b> = Negación </p>
+            <p><b>XOR</b> = OR exclusivo </p>
+            <p><b>=></b> = Condicional</p>
+            <p><b>=</b> = Bicondicional</p>
+        </div>
+
+
         <label for="cant_vars">Cantidad de Variables:</label>
         <input type="number" id="cant_vars" name="cant_vars" min="1" max="12" required onchange="generarCampos()">
 
@@ -230,5 +280,4 @@
     {% endif %}
 </body>
 </html>
-
 
