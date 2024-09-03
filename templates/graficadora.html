@@ -30,6 +30,7 @@
         }
 
         form {
+            position: relative;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -38,6 +39,31 @@
             width: 100%;
             max-width: 500px;
             margin-bottom: 30px;
+        }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e40505e1;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex; /* Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        #help-box {
+            display: none; /* Oculto por defecto */
+            background-color: #fae8d4;
+            color: #e40505e1;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
         }
 
         label {
@@ -72,7 +98,9 @@
             background-color: #bd1616;
         }
 
-
+        .menu-button {
+            background-color: #e40505e1; 
+        }
 
         #grafico-container img {
             max-width: 100%;
@@ -84,12 +112,40 @@
 <body>
     <h1>¡Graficadora!</h1>
     <form id="funcion" method="POST">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+        
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <li> Raíz cuadrada se escribe como <code>sqrt(x)</code></li>
+            <li> Logaritmo natural se escribe como <code>ln(x)</code></li>
+            <li> Coseno se escribe como <code>cos(x)</code></li>
+            <li> Seno se escribe como <code>sin(x)</code></li>
+            <li> Tangente se escribe como <code>tan(x)</code></li>
+            <li> Exponencial o Euler se escribe como <code>exp(x)</code></li>
+            <li> Las trigonométricas inversas como <code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code></li>
+            <li> Para multiplicar el valor dentro de la función, debe ser tipo: <code>sin(2*x)</code> Y no <code>sin(2x)</code></li>
+        </div>
+
         <label for="funcion">Ingrese la función:</label>
         <input type="text" id="funcion" name="funcion" placeholder="Ejemplo: 2*x">
         <button type="submit">Graficar</button>
+        <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
     </form>
     <div id="grafico-container">
         {{ fig | safe }}
     </div>
+
+    <script>    
+
+        // Función para mostrar y ocultar el recuadro de ayuda
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+    </script>
 </body>
 </html>
