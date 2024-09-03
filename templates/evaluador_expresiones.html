@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluadora de Expresiones</title>
+    <script>
+        function actualizarVariables() {
+            // Obtener la expresión ingresada
+            const expresion = document.getElementById('expresion').value;
+            const variablesContainer = document.getElementById('variables-container');
+            const variables = ['x', 'y', 'z'];
+
+            // Limpiar el contenedor de variables
+            variablesContainer.innerHTML = '';
+
+            // Iterar sobre las posibles variables
+            variables.forEach(variable => {
+                if (expresion.includes(variable)) {
+                    // Crear una etiqueta y un campo de entrada para la variable
+                    const label = document.createElement('label');
+                    label.for = variable;
+                    label.innerText = `Ingrese el valor de ${variable}:`;
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = variable;
+                    input.name = variable;
+                    input.required = true;
+
+                    // Agregar la etiqueta y el campo de entrada al contenedor
+                    variablesContainer.appendChild(label);
+                    variablesContainer.appendChild(document.createElement('br'));
+                    variablesContainer.appendChild(input);
+                    variablesContainer.appendChild(document.createElement('br'));
+                    variablesContainer.appendChild(document.createElement('br'));
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora de Expresiones</h1>
+    <form method="POST">
+        <label for="expresion">Ingrese la expresión a evaluar:</label><br>
+        <input type="text" id="expresion" name="expresion" oninput="actualizarVariables()" required><br><br>
+
+        <!-- Contenedor para los campos de variables -->
+        <div id="variables-container">
+            <!-- Los campos de entrada para las variables se añadirán aquí -->
+        </div>
+
+        <input type="submit" value="Evaluar">
+    </form>
+
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+
+    {% if resultado_radianes and resultado_grados %}
+        <h2>Resultado en radianes:</h2>
+        <p>{{ resultado_radianes }}</p>
+
+        <h2>Resultado en grados:</h2>
+        <p>{{ resultado_grados }}</p>
+    {% endif %}
+</body>
+</html>
