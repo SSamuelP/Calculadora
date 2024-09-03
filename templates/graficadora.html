@@ -1,19 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=200px, initial-scale=1.0" />
-<title>Graficadora</title>
-</head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graficadora</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            background-image: url('/static/css/imagenes/graficadora.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
+        h1 {
+            font-size: 36px;
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #495057;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #e40505e1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #bd1616;
+        }
+
+
+
+        #grafico-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
 <body>
-<h1>¡Graficadora!</h1>
-<form id="funcion" method="POST">
-    <label for="funcion">Ingrese la funcion:</label>
-    <input type="text" id="funcion" name="funcion" placeholder="Ejemplo: 2*x">
-</form>
-<div>
-    {{ fig | safe}}
-</div>
+    <h1>¡Graficadora!</h1>
+    <form id="funcion" method="POST">
+        <label for="funcion">Ingrese la función:</label>
+        <input type="text" id="funcion" name="funcion" placeholder="Ejemplo: 2*x">
+        <button type="submit">Graficar</button>
+    </form>
+    <div id="grafico-container">
+        {{ fig | safe }}
+    </div>
 </body>
 </html>

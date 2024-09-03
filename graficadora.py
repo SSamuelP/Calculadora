@@ -29,7 +29,7 @@ def graficar_2d(expresion):
         )
 
         # Convertir la gráfica en HTML
-        fig_html = fig.to_html(full_html=False, include_mathjax="cdn",  default_width = "1500px", default_height = "500px")
+        fig_html = fig.to_html(full_html=False, include_mathjax="cdn",  default_width = "1300px", default_height = "500px")
         return fig_html
 
     except Exception as e:

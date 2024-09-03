@@ -4,6 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluadora de Expresiones</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            background-image: url('/static/css/imagenes/expresiones.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .content {
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .sidebar {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            margin-right: 20px;
+            text-align: left;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #ff6600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 100%;
+        }
+
+        label {
+            font-size: 16px;
+            color: #495057;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #variables-container {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #dd720f;
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #a8470f;
+            transform: translateY(-2px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #dd720f;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 20px;
+            color: #495057;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
     <script>
         function actualizarVariables() {
             // Obtener la expresión ingresada
@@ -40,29 +170,46 @@
     </script>
 </head>
 <body>
-    <h1>Calculadora de Expresiones</h1>
-    <form method="POST">
-        <label for="expresion">Ingrese la expresión a evaluar:</label><br>
-        <input type="text" id="expresion" name="expresion" oninput="actualizarVariables()" required><br><br>
-
-        <!-- Contenedor para los campos de variables -->
-        <div id="variables-container">
-            <!-- Los campos de entrada para las variables se añadirán aquí -->
+    <div class="content">
+        <div class="sidebar">
+            <h2>¡Modo de uso!</h2>
+            <ul>
+                <li>* Raíz cuadrada se escribe como <code>sqrt(x)</code></li>
+                <li>* Logaritmo natural se escribe como <code>ln(x)</code></li>
+                <li>* Coseno se escribe como <code>cos(x)</code></li>
+                <li>* Seno se escribe como <code>sin(x)</code></li>
+                <li>* Tangente se escribe como <code>tan(x)</code></li>
+                <li>* Exponencial o Euler se escribe como <code>exp(x)</code></li>
+                <li>* Las trigonométricas inversas como <code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code></li>
+                <li>* Para multiplicar el valor dentro de la función, debe ser tipo: <code>sin(2*x)</code> Y no <code>sin(2x)</code></li>
+            </ul>
         </div>
+        <div class="main-content">
+            <h1>Calculadora de Expresiones</h1>
+            <form method="POST">
+                <label for="expresion">Ingrese la expresión a evaluar:</label><br>
+                <input type="text" id="expresion" name="expresion" oninput="actualizarVariables()" value="{{ expresion }}" required><br><br>
 
-        <input type="submit" value="Evaluar">
-    </form>
+                <!-- Contenedor para los campos de variables -->
+                <div id="variables-container">
+                    <!-- Los campos de entrada para las variables se añadirán aquí -->
+                </div>
 
-    {% if error %}
-        <p style="color: red;">Error: {{ error }}</p>
-    {% endif %}
+                <input type="submit" value="Evaluar">
+            </form>
 
-    {% if resultado_radianes and resultado_grados %}
-        <h2>Resultado en radianes:</h2>
-        <p>{{ resultado_radianes }}</p>
+            {% if error %}
+                <p class="error-message">Error: {{ error }}</p>
+            {% endif %}
 
-        <h2>Resultado en grados:</h2>
-        <p>{{ resultado_grados }}</p>
-    {% endif %}
+            {% if resultado_radianes and resultado_grados %}
+                <h2>Resultado: (Si es trigonométrica está dado en radianes):</h2>
+                <p>{{ resultado_radianes }}</p>
+
+                <h2>Resultado en grados:</h2>
+                <p>{{ resultado_grados }}</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
