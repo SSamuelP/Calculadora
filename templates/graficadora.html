@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=200px, initial-scale=1.0" />
+<title>Graficadora</title>
+</head>
+
+<body>
+<h1>¡Graficadora!</h1>
+<form id="funcion" method="POST">
+    <label for="funcion">Ingrese la funcion:</label>
+    <input type="text" id="funcion" name="funcion" placeholder="Ejemplo: 2*x">
+</form>
+<div>
+    {{ fig | safe}}
+</div>
+</body>
+</html>

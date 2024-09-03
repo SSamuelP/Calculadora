@@ -9,6 +9,7 @@ from flask import Flask, render_template, request
 from logica import calculadora_logica
 from logica_especifica import calculadora_logica_especifica
 from conversor_bases import convert_to_bases
+from graficadora import graficar_2d
 from evaluador_expresiones import validar_expresion, encontrar_trigonometricas, variables_usadas
 
 algebra = boolean.BooleanAlgebra()
@@ -110,6 +111,16 @@ def evaluador():
     return render_template('evaluador_expresiones.html', resultado_radianes=resultado_radianes, 
                            resultado_grados=resultado_grados, error=error, variables=variables_usadas)
 
+#Graficadora
+@app.route("/graficadora", methods=["GET", "POST"])
+def graficadora():
+
+    if request.method == "POST":
+        funcion = request.form.get('funcion', '')
+        if funcion:
+            fig = graficar_2d(funcion)
+
+    return render_template("graficadora.html", funcion=funcion, fig=fig)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
