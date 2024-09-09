@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluadora de Expresiones</title>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          TeX: {
+             equationNumbers: {  autoNumber: "AMS"  },
+             extensions: ["AMSmath.js", "AMSsymbols.js", "autobold.js", "color.js"]
+          }
+        });
+    </script>
+    <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -204,10 +215,10 @@
 
             {% if resultado_radianes and resultado_grados %}
                 <h2>Resultado: (Si es trigonométrica está dado en radianes):</h2>
-                <p>{{ resultado_radianes }}</p>
+                <p>\({{ resultado_radianes }}\)</p>
 
                 <h2>Resultado en grados:</h2>
-                <p>{{ resultado_grados }}</p>
+                <p>\({{ resultado_grados }}\)</p>
             {% endif %}
         </div>
     </div>

@@ -2,7 +2,6 @@ import boolean
 import numpy as np
 import sympy as sy
 from sympy import *
-from IPython.display import Latex
 from sympy.parsing.sympy_parser import parse_expr
 from booleana import simplificar_operacion
 from flask import Flask, render_template, request
