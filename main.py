@@ -11,6 +11,7 @@ from conversor_bases import convert_to_bases
 from graficadora import graficar_2d
 from evaluador_expresiones import validar_expresion, encontrar_trigonometricas, variables_usadas
 from biseccion import metodo_biseccion
+from falsa_posicion import regla_falsa
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -132,7 +133,7 @@ def biseccion():
     iteraciones = None
     error_relativo = None
     tabla_html = None
-
+    expresion = None
     if request.method == "POST":
         expresion = request.form['funcion']
         limite_a = float(request.form['lim_inferior'])  # Convertir a float
@@ -152,7 +153,33 @@ def biseccion():
                            error_relativo=error_relativo,
                            tabla_html=tabla_html)
 
+#Método de falsa posición
+@app.route("/falsa_posicion", methods=["GET", "POST"])
+def falsa_posicion():
+    resultado = None
+    iteraciones = None
+    error_relativo = None
+    tabla_html = None
+    expresion = None
 
+    if request.method == "POST":
+        expresion = request.form['funcion']
+        limite_a = float(request.form['lim_inferior'])  
+        limite_b = float(request.form['lim_superior'])  
+        tolerancia = float(request.form['tolerancia'])  
+
+        # Convertir la expresión en una función simbólica
+        expresion_simb = parse_expr(expresion)
+
+        # Llamar al método de bisección con la expresión simbólica
+        resultado, iteraciones, error_relativo, tabla_html = regla_falsa(expresion_simb, limite_a, limite_b, tolerancia)
+    
+    return render_template("falsa_regla.html",
+                           expresion = expresion,
+                           resultado=resultado,
+                           iteraciones=iteraciones,
+                           error_relativo=error_relativo,
+                           tabla_html=tabla_html)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
