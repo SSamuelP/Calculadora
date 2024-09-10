@@ -12,6 +12,7 @@ from graficadora import graficar_2d
 from evaluador_expresiones import validar_expresion, encontrar_trigonometricas, variables_usadas
 from biseccion import metodo_biseccion
 from falsa_posicion import regla_falsa
+from derivadas import derivar_funcion
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -180,6 +181,19 @@ def falsa_posicion():
                            iteraciones=iteraciones,
                            error_relativo=error_relativo,
                            tabla_html=tabla_html)
+
+#Calculadora de derivadas
+@app.route("/derivadas", methods=["GET", "POST"])
+def derivadas():
+    derivadas = None
+
+    if request.method == "POST":
+        funcion = request.form['funcion']
+        orden = int(request.form['orden'])
+
+        derivadas = derivar_funcion(funcion, orden)
+
+    return render_template("calculadora_derivadas.html", derivadas=derivadas)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)

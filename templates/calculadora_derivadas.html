@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Derivadas</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Calculadora de Derivadas</h1>
+    <form method="POST" action="/derivadas">
+        <label for="funcion">Función:</label>
+        <input type="text" id="funcion" name="funcion" required>
+        <br>
+
+        <label for="orden">Orden de la derivada:</label>
+        <input type="number" id="orden" name="orden" min="1" required>
+        <br>
+
+        <button type="submit">Calcular Derivada</button>
+    </form>
+
+    {% if derivadas %}
+        <h2>Derivadas Calculadas</h2>
+        <ul>
+            {% for derivada in derivadas %}
+                <li>$$ {{ derivada }} $$</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <script>
+        MathJax.typeset();
+    </script>
+</body>
+</html>
