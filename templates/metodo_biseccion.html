@@ -20,13 +20,13 @@
             padding: 20px;
             padding-top: 150px; 
         }
-
+    
         h1 {
             font-size: 36px;
             color: #8c6e54;
             margin-bottom: 20px;
         }
-
+        
         form {
             position: relative;
             background-color: #e5d4c0;
@@ -38,7 +38,34 @@
             width: 100%;
             text-align: left;
         }
-
+        .menu-button {
+            background-color: #8c6e54; 
+        }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #8c6e54;
+            border: none;
+            color: #ffeadd;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex; /* Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        #help-box {
+            display: none; /* Oculto por defecto */
+            background-color: #ffeadd;
+            color: #4a3b2c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
         label {
             font-size: 16px;
             color: #4a3b2c;
@@ -64,7 +91,7 @@
             border-radius: 5px;
             border: none;
             background-color: #8c6e54;
-            color: white;
+            color: #ffeadd;
             transition: background-color 0.3s, transform 0.3s;
         }
 
@@ -100,6 +127,13 @@
             text-align: left;
         }
     </style>
+    <script>
+        // Función para mostrar y ocultar el recuadro de ayuda
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 </head>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -115,6 +149,24 @@
 <body>
     <h1>Método de Bisección</h1>
     <form method="POST" action="/biseccion">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+        
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <li> El símbolo del exponente es <b>**</b>, no utilice: <b>^</b>.</li>
+            <li> Raíz cuadrada se escribe como <code>sqrt(x)</code></li>
+            <li> Logaritmo natural se escribe como <code>ln(x)</code></li>
+            <li> Coseno se escribe como <code>cos(x)</code></li>
+            <li> Seno se escribe como <code>sin(x)</code></li>
+            <li> Tangente se escribe como <code>tan(x)</code></li>
+            <li> Exponencial o Euler se escribe como <code>exp(x)</code></li>
+            <li> Las trigonométricas inversas como <code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code></li>
+            <li> Para multiplicar el valor dentro de la función, debe ser tipo: <code>sin(2*x)</code> Y no <code>sin(2x)</code></li>
+        </div>
+
         <label for="funcion">Función:</label>
         <input type="text" id="funcion" name="funcion" required>
         <br>
@@ -132,6 +184,8 @@
         <br>
 
         <button type="submit">Calcular</button>
+        <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        
     </form>
 
     {% if resultado is not none %}

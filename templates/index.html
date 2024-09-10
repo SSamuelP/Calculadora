@@ -76,6 +76,15 @@
         .graficadora-button {
             background-color: #ff7700;
         }
+        .derivadas-button {
+            background-color: #ffea00;
+        }
+        .falsa_regla-button {
+            background-color: #8000ff;
+        }
+        .biseccion-button {
+            background-color: #4a2727;
+        }
         .button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
@@ -92,24 +101,43 @@
     <main>
         <h2>¿Qué calculadora deseas utilizar?</h2>
         <div class="button-container">
+
             <form action="/calculadora_logica" method="get">
                 <button type="submit" class="button logic-button">Calculadora Lógica</button>
             </form>
+
             <form action="/calculadora_booleana" method="get">
                 <button type="submit" class="button boolean-button">Calculadora Booleana</button>
             </form>
+
             <form action="/calculadora_logica_especifica" method="get">
                 <button type="submit" class="button logic-esp-button">Calculadora Lógica Específica</button>
             </form>
+
             <form action="/convert" method="get">
                 <button type="submit" class="button convert-button">Conversor de Bases</button>
             </form>
+
             <form action="/evaluador_expresiones" method="get">
                 <button type="submit" class="button evaluador-button">Evaluador de Expresiones</button>
             </form>
+
             <form action="/graficadora" method="get">
                 <button type="submit" class="button graficadora-button">Graficadora</button>
             </form>
+
+            <form action="/falsa_posicion" method="get">
+                <button type="submit" class="button falsa_regla-button">Método de la Regla Falsa</button>
+            </form>
+
+            <form action="/derivadas" method="get">
+                <button type="submit" class="button derivadas-button">Calculadora de Derivadas</button>
+            </form>
+
+            <form action="/biseccion" method="get">
+                <button type="submit" class="button biseccion-button">Método de Bisección</button>
+            </form>
+
         </div>
     </main>
 </body>
