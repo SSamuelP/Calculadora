@@ -4,6 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Derivadas</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #fffbea;
+            background-image: url('/static/css/imagenes/derivadas.png'); 
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            padding-top: 150px; 
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #ffc107; 
+            margin-bottom: 20px;
+        }
+
+        form {
+            position: relative;
+            background-color: #fff8e1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+        }
+
+        label {
+            font-size: 16px;
+            color: #6c757d;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffc107;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .calculate-button {
+            background-color: #ffc107; 
+        }
+
+        button:hover {
+            background-color: #e0a800; 
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #ffc107; 
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .mathjax {
+            font-size: 18px;
+        }
+    </style>
+
+    <!-- Cargar MathJax para renderizar fórmulas matemáticas -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -18,7 +116,7 @@
         <input type="number" id="orden" name="orden" min="1" required>
         <br>
 
-        <button type="submit">Calcular Derivada</button>
+        <button type="submit" class="calculate-button">Calcular Derivada</button>
     </form>
 
     {% if derivadas %}
@@ -30,6 +128,7 @@
         </ul>
     {% endif %}
 
+    <!-- Renderizar MathJax después de cargar la página -->
     <script>
         MathJax.typeset();
     </script>

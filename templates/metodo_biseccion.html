@@ -4,6 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método de Bisección</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f7f3e9;
+            background-image: url('/static/css/imagenes/biseccion.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #4a3b2c;
+            margin: 0;
+            padding: 20px;
+            padding-top: 150px; 
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #8c6e54;
+            margin-bottom: 20px;
+        }
+
+        form {
+            position: relative;
+            background-color: #e5d4c0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+        }
+
+        label {
+            font-size: 16px;
+            color: #4a3b2c;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #8c6e54;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #8c6e54;
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            background-color: #6e5743;
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #8c6e54;
+        }
+
+        p {
+            font-size: 18px;
+            color: #4a3b2c;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #6e5743;
+        }
+
+        .result-container {
+            background-color: #f7f3e9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
 </head>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -39,11 +135,13 @@
     </form>
 
     {% if resultado is not none %}
-        <h2>Resultado</h2>
-        <p>Función: \({{ expresion }}\)</p>
-        <p>Raíz aproximada: {{ resultado }}</p>
-        <p>Iteraciones: {{ iteraciones }}</p>
-        <p>Error Relativo: {{ error_relativo }}</p>
+        <div class="result-container">
+            <h2>Resultado</h2>
+            <p>Función: \({{ expresion }}\)</p>
+            <p>Raíz aproximada: {{ resultado }}</p>
+            <p>Iteraciones: {{ iteraciones }}</p>
+            <p>Error Relativo: {{ error_relativo }}</p>
+        </div>
 
         <h3>Tabla de iteraciones</h3>
         <div>{{ tabla_html|safe }}</div>
