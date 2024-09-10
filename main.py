@@ -10,6 +10,7 @@ from logica_especifica import calculadora_logica_especifica
 from conversor_bases import convert_to_bases
 from graficadora import graficar_2d
 from evaluador_expresiones import validar_expresion, encontrar_trigonometricas, variables_usadas
+from biseccion import metodo_biseccion
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -123,6 +124,35 @@ def graficadora():
             fig = graficar_2d(funcion)
 
     return render_template("graficadora.html", funcion=funcion, fig=fig, error=error)
+
+#Metodo de bisección
+@app.route("/biseccion", methods=["GET", "POST"])
+def biseccion():
+    resultado = None
+    iteraciones = None
+    error_relativo = None
+    tabla_html = None
+
+    if request.method == "POST":
+        expresion = request.form['funcion']
+        limite_a = float(request.form['lim_inferior'])  # Convertir a float
+        limite_b = float(request.form['lim_superior'])  # Convertir a float
+        tolerancia = float(request.form['tolerancia'])  # Convertir a float
+
+        # Convertir la expresión en una función simbólica
+        expresion_simb = parse_expr(expresion)
+
+        # Llamar al método de bisección con la expresión simbólica
+        resultado, iteraciones, error_relativo, tabla_html = metodo_biseccion(expresion_simb, limite_a, limite_b, tolerancia)
+    
+    return render_template("metodo_biseccion.html",
+                           expresion = expresion,
+                           resultado=resultado,
+                           iteraciones=iteraciones,
+                           error_relativo=error_relativo,
+                           tabla_html=tabla_html)
+
+
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
