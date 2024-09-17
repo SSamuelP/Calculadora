@@ -132,6 +132,31 @@
             display: inline-block;
             text-align: left;
         }
+        #result-table {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+            background-color: #fff; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        .dataframe {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #fff; 
+        }
+        .dataframe th, .dataframe td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .dataframe th {
+            background-color: #41005d; 
+            color: white;
+        }
     </style>
 
     <!-- Cargar MathJax para renderizar ecuaciones matemáticas -->
@@ -156,7 +181,7 @@
 </head>
 <body>
     <h1>Método de la Regla Falsa</h1>
-    <form method="POST" action="/biseccion">
+    <form method="POST" action="/falsa_posicion">
 
         <!-- Botón de ayuda -->
         <button type="button" class="help-button" onclick="toggleHelp()">?</button>
@@ -199,7 +224,7 @@
         <div class="result-container">
             <h2>Resultado</h2>
             <p>Función: \({{ expresion }}\)</p>
-            <p>Raíz aproximada: {{ resultado }}</p>
+            <p>Raíz aproximada: \({{ resultado }}\)</p>
             <p>Iteraciones: {{ iteraciones }}</p>
             <p>Error Relativo: \({{ error_relativo }}\)</p>
         </div>
