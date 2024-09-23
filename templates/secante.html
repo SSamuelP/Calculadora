@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de la Secante</title>
+</head>
+<body>
+    <h1>Método de la Secante</h1>
+    
+    <!-- Formulario para graficar la función -->
+    <form action="/metodo_secante" method="POST">
+        <label for="funcion">Función (por ejemplo, x**3 - x - 2):</label><br>
+        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
+
+        <input type="submit" name="graficar" value="Graficar">
+    </form>
+
+    <!-- Mostrar la gráfica si está disponible -->
+    {% if fig_html %}
+    <h2>Gráfico de la Función</h2>
+    <div>{{ fig_html|safe }}</div>
+    {% endif %}
+
+    <!-- Inputs para el método de la secante, mostrados solo si la gráfica fue generada -->
+    {% if fig_html %}
+    <h2>Calcula la raíz con el Método de la Secante</h2>
+    <form action="/metodo_secante" method="POST">
+        <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
+        
+        <label for="a">Valor de a:</label><br>
+        <input type="number" id="a" name="a" step="any" required><br><br>
+
+        <label for="b">Valor de b:</label><br>
+        <input type="number" id="b" name="b" step="any" required><br><br>
+
+        <label for="tol">Tolerancia (Error relativo):</label><br>
+        <input type="number" id="tol" name="tol" step="any" required><br><br>
+
+        <input type="submit" name="calcular_secante" value="Calcular">
+    </form>
+    {% endif %}
+
+    <!-- Mostrar resultados del método de la secante si están disponibles -->
+    {% if secante_result %}
+    <h2>Resultados</h2>
+    {% if secante_result.raiz is not none %}
+    <p>Raíz aproximada: {{ secante_result.raiz }}</p>
+    <p>Error relativo final: {{ secante_result.error_relativo }}</p>
+    <p>Número de iteraciones: {{ secante_result.iteraciones }}</p>
+
+    <h3>Tabla de Iteraciones:</h3>
+    <div>{{ secante_result.tabla|safe }}</div>
+    {% else %}
+    <p>Error: El método de la secante no se puede aplicar.</p>
+    {% endif %}
+    {% endif %}
+</body>
+</html>

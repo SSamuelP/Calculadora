@@ -13,6 +13,7 @@ from evaluador_expresiones import validar_expresion, encontrar_trigonometricas, 
 from biseccion import metodo_biseccion
 from falsa_posicion import regla_falsa
 from derivadas import derivar_funcion
+from secante import secant
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -194,6 +195,40 @@ def derivadas():
         derivadas = derivar_funcion(funcion, orden)
 
     return render_template("calculadora_derivadas.html", derivadas=derivadas)
+
+@app.route('/metodo_secante', methods=['GET', 'POST'])
+def met_secante():
+    fig_html = None
+    secante_result = None
+    funcion = None
+    if request.method == 'POST':
+        if 'graficar' in request.form:
+            # Graficar la función
+            funcion = request.form['funcion']
+            fig_html = graficar_2d(funcion)
+        
+        if 'calcular_secante' in request.form:
+            # Obtener datos para el método de la secante
+            funcion = request.form['funcion']
+            a = float(request.form['a'])
+            b = float(request.form['b'])
+            tol = float(request.form['tol'])
+
+            # Volver a graficar la función si ya se ingresó
+            fig_html = graficar_2d(funcion)
+
+            # Llamar al método de la secante
+            raiz, error_relativo, iteraciones, tabla_html = secant(funcion, a, b, tol=tol)
+            secante_result = {
+                'raiz': raiz,
+                'error_relativo': error_relativo,
+                'iteraciones': iteraciones,
+                'tabla': tabla_html
+            }
+
+    # Renderizar la página principal
+    return render_template('secante.html', fig_html=fig_html, secante_result=secante_result, funcion=funcion)
+
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
