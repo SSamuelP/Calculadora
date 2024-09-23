@@ -1,6 +1,5 @@
 import boolean
 import numpy as np
-import sympy as sy
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from booleana import simplificar_operacion
