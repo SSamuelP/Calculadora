@@ -237,7 +237,7 @@ def met_secante():
 def newton():
     fig_html = None
     newton_result = None
-    funcion = None
+    funcion = ""
     if request.method == 'POST':
         if 'graficar' in request.form:
             # Graficar la función

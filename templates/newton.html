@@ -11,7 +11,7 @@
     <!-- Formulario para graficar la función -->
     <form action="/newton" method="POST">
         <label for="funcion">Función:</label><br>
-        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
+        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" placeholder="x**3 - 2*x + 1" required><br><br>
 
         <input type="submit" name="graficar" value="Graficar">
     </form>
@@ -29,10 +29,10 @@
         <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
         
         <label for="x_0">Valor inicial:</label><br>
-        <input type="number" id="x_0" name="x_0" step="any" required><br><br>
+        <input type="number" id="x_0" name="x_0" step="any" placeholder="-1.5" required><br><br>
 
         <label for="tol">Tolerancia (Error relativo):</label><br>
-        <input type="number" id="tol" name="tol" step="any" required><br><br>
+        <input type="number" id="tol" name="tol" step="any" placeholder="0.00001" required><br><br>
 
         <input type="submit" name="calcular_newton" value="Calcular">
     </form>
