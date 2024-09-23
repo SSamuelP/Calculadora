@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de Newton-Raphson</title>
+</head>
+<body>
+    <h1>Método de Newton-Raphson</h1>
+    
+    <!-- Formulario para graficar la función -->
+    <form action="/newton" method="POST">
+        <label for="funcion">Función:</label><br>
+        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
+
+        <input type="submit" name="graficar" value="Graficar">
+    </form>
+
+    <!-- Mostrar la gráfica si está disponible -->
+    {% if fig_html %}
+    <h2>Gráfico de la Función</h2>
+    <div>{{ fig_html|safe }}</div>
+    {% endif %}
+
+    <!-- Inputs para el método de Newton-Raphson, mostrados solo si la gráfica fue generada -->
+    {% if fig_html %}
+    <h2>Calcula la raíz con el Método de Newton-Raphson</h2>
+    <form action="/newton" method="POST">
+        <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
+        
+        <label for="x_0">Valor inicial:</label><br>
+        <input type="number" id="x_0" name="x_0" step="any" required><br><br>
+
+        <label for="tol">Tolerancia (Error relativo):</label><br>
+        <input type="number" id="tol" name="tol" step="any" required><br><br>
+
+        <input type="submit" name="calcular_newton" value="Calcular">
+    </form>
+    {% endif %}
+
+    <!-- Mostrar resultados del método de Newton-Raphson si están disponibles -->
+    {% if newton_result %}
+    <h2>Resultados</h2>
+    {% if newton_result.raiz is not none %}
+    <p>Raíz aproximada: {{ newton_result.raiz }}</p>
+    <p>Error relativo final: {{ newton_result.error_relativo }}</p>
+    <p>Número de iteraciones: {{ newton_result.iteraciones }}</p>
+
+    <h3>Tabla de Iteraciones:</h3>
+    <div>{{ newton_result.tabla|safe }}</div>
+    {% else %}
+    <p>Error: El método de Newton-Raphson no se puede aplicar.</p>
+    {% endif %}
+    {% endif %}
+</body>
+</html>

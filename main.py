@@ -14,6 +14,7 @@ from biseccion import metodo_biseccion
 from falsa_posicion import regla_falsa
 from derivadas import derivar_funcion
 from secante import secant
+from newton import newton_raphson
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -93,6 +94,7 @@ def evaluador():
     error = None
     if request.method == 'POST':
         expresion = request.form['expresion']
+        funcion = expresion #Se crea esta variable para que se pueda mostrar en la pagina una vez se haya enviado el formulario
         hay_trigonometricas = encontrar_trigonometricas(expresion)
         
         variables_usadas.clear()  # Limpia las variables usadas en cada nuevo envío
@@ -112,7 +114,8 @@ def evaluador():
             resultado_grados = "No aplica."
 
     return render_template('evaluador_expresiones.html', resultado_radianes=resultado_radianes, 
-                           resultado_grados=resultado_grados, error=error, variables=variables_usadas)
+                           resultado_grados=resultado_grados, error=error, variables=variables_usadas,
+                           funcion = funcion)
 
 #Graficadora
 @app.route("/graficadora", methods=["GET", "POST"])
@@ -135,7 +138,7 @@ def biseccion():
     iteraciones = None
     error_relativo = None
     tabla_html = None
-    expresion = None
+    expresion = ""
     if request.method == "POST":
         expresion = request.form['funcion']
         limite_a = float(request.form['lim_inferior'])  # Convertir a float
@@ -162,7 +165,7 @@ def falsa_posicion():
     iteraciones = None
     error_relativo = None
     tabla_html = None
-    expresion = None
+    expresion = ""
 
     if request.method == "POST":
         expresion = request.form['funcion']
@@ -187,20 +190,21 @@ def falsa_posicion():
 @app.route("/derivadas", methods=["GET", "POST"])
 def derivadas():
     derivadas = None
-
+    funcion = ""
     if request.method == "POST":
         funcion = request.form['funcion']
         orden = int(request.form['orden'])
 
         derivadas = derivar_funcion(funcion, orden)
 
-    return render_template("calculadora_derivadas.html", derivadas=derivadas)
+    return render_template("calculadora_derivadas.html", derivadas=derivadas, funcion=funcion)
 
 @app.route('/metodo_secante', methods=['GET', 'POST'])
 def met_secante():
     fig_html = None
     secante_result = None
-    funcion = None
+    funcion = ""
+
     if request.method == 'POST':
         if 'graficar' in request.form:
             # Graficar la función
@@ -229,6 +233,36 @@ def met_secante():
     # Renderizar la página principal
     return render_template('secante.html', fig_html=fig_html, secante_result=secante_result, funcion=funcion)
 
+@app.route('/newton', methods=['GET', 'POST'])
+def newton():
+    fig_html = None
+    newton_result = None
+    funcion = None
+    if request.method == 'POST':
+        if 'graficar' in request.form:
+            # Graficar la función
+            funcion = request.form['funcion']
+            fig_html = graficar_2d(funcion)
+        
+        if 'calcular_newton' in request.form:
+            # Obtener datos para el método de Newton-Raphson
+            funcion = request.form['funcion']
+            x_0 = float(request.form['x_0'])
+            tol = float(request.form['tol'])
+
+            # Volver a graficar la función si ya se ingresó
+            fig_html = graficar_2d(funcion)
+
+            # Llamar al método de Newton-Raphson
+            raiz, error_relativo, iteraciones, tabla_html = newton_raphson(funcion, x_0, tol=tol)
+            newton_result = {
+                'raiz': raiz,
+                'error_relativo': error_relativo,
+                'iteraciones': iteraciones,
+                'tabla': tabla_html
+            }
+
+    return render_template('newton.html', fig_html=fig_html, newton_result=newton_result, funcion=funcion)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
