@@ -15,6 +15,7 @@ from falsa_posicion import regla_falsa
 from derivadas import derivar_funcion
 from secante import secant
 from newton import newton_raphson
+from polinomios import calcular_raices
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -199,6 +200,7 @@ def derivadas():
 
     return render_template("calculadora_derivadas.html", derivadas=derivadas, funcion=funcion)
 
+# Método de la Secante
 @app.route('/metodo_secante', methods=['GET', 'POST'])
 def met_secante():
     fig_html = None
@@ -233,6 +235,7 @@ def met_secante():
     # Renderizar la página principal
     return render_template('secante.html', fig_html=fig_html, secante_result=secante_result, funcion=funcion)
 
+# Método de Newton-Raphson
 @app.route('/newton', methods=['GET', 'POST'])
 def newton():
     fig_html = None
@@ -263,6 +266,20 @@ def newton():
             }
 
     return render_template('newton.html', fig_html=fig_html, newton_result=newton_result, funcion=funcion)
+
+# Método para hallar las raíces en los polinomios
+@app.route('/polinomio', methods=['GET', 'POST'])
+def polinomio():
+    raices = None
+    polinomio_str = ""
+    if request.method == 'POST':
+        # Obtener el polinomio desde el formulario
+        polinomio_str = request.form['polinomio']
+        
+        # Calcular las raíces
+        raices = calcular_raices(polinomio_str)
+
+    return render_template('polinomio.html', raices=raices, polinomio_str = polinomio_str)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)

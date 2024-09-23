@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Raíces de Polinomios</title>
+</head>
+<body>
+    <h1>Calculadora de Raíces de Polinomios</h1>
+    
+    <form action="/polinomio" method="POST">
+        <label for="polinomio">Ingresa el polinomio:</label><br>
+        <input type="text" id="polinomio" name="polinomio" value="{{ polinomio_str }}" placeholder="3*x^2 + 1" required><br><br>
+
+        <input type="submit" value="Calcular Raíces">
+    </form>
+
+    <!-- Mostrar las raíces calculadas -->
+    {% if raices %}
+    <h2>Raíces Calculadas</h2>
+    <div style="text-align: center;">
+        {% for raiz in raices %}
+        <p>{{ raiz }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
