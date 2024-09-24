@@ -5,6 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método de Newton-Raphson</title>
 </head>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        background-color: #ffece6; /* Fondo en tono rosa suave */
+        background-image: url('/static/css/imagenes/newton.png');
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #5a3d31; /* Texto en tono marrón rosado */
+        margin: 0;
+        padding: 20px;
+        padding-top: 150px; 
+    }
+
+    h1 {
+        font-size: 36px;
+        color: #d9796a; /* Tono salmón fuerte */
+        margin-bottom: 20px;
+    }
+
+    form {
+        position: relative;
+        background-color: #f4d4c1; /* Fondo formulario salmón claro */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        max-width: 500px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .menu-button {
+        background-color: #d9796a; /* Botón en tono salmón fuerte */
+    }
+
+    .help-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #d9796a;
+        border: none;
+        color: #ffeae3; /* Texto blanco salmón */
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #help-box {
+        display: none;
+        background-color: #ffeae3; /* Fondo caja de ayuda rosa claro */
+        color: #5a3d31;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 16px;
+        color: #5a3d31; /* Etiquetas en tono marrón rosado */
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #d9796a; /* Borde salmón fuerte */
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        background-color: #d9796a; /* Fondo botón salmón */
+        color: #ffeae3;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+        opacity: 0.9;
+        background-color: #b96b5a; /* Tono más oscuro al hacer hover */
+        transform: translateY(-2px);
+    }
+
+    h2 {
+        margin-top: 30px;
+        font-size: 24px;
+        color: #d9796a; /* Tono salmón */
+    }
+
+    p {
+        font-size: 18px;
+        color: #5a3d31;
+    }
+
+    h3 {
+        margin-top: 20px;
+        font-size: 22px;
+        color: #b96b5a; /* Tono más oscuro de salmón */
+    }
+
+    .result-container {
+        background-color: #ffece6; /* Fondo contenedor de resultados en tono rosa suave */
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        text-align: left;
+    }
+
+    #result-table {
+        margin-top: 20px;
+        width: 100%;
+        overflow-x: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    }
+
+    .dataframe {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        background-color: #fff;
+    }
+
+    .dataframe th, .dataframe td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .dataframe th {
+        background-color: #d9796a; /* Encabezados de tabla en salmón */
+        color: white;
+    }
+</style>
 <body>
     <h1>Método de Newton-Raphson</h1>
     

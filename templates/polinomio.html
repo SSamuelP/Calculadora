@@ -1,19 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Raíces de Polinomios</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #e6f7f5; /* Fondo verde menta claro */
+            color: #2c5a56; /* Texto en tono verde oscuro */
+            background-image: url('/static/css/imagenes/polinomio.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            padding-top: 150px; 
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2f7167; /* Tono verde menta más oscuro */
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            position: relative;
+            background-color: #b2e2db; /* Fondo formulario verde menta claro */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            color: #2c5a56; /* Etiquetas en tono verde oscuro */
+            display: block;
+            margin-bottom: 8px;
+            width: 100%;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #2f7167; /* Borde verde oscuro */
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #2f7167; /* Fondo botón verde menta oscuro */
+            color: #e6f7f5; /* Texto blanco menta claro */
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            opacity: 0.9;
+            background-color: #255a4f; /* Tono más oscuro al hacer hover */
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #2f7167; /* Tono verde menta */
+        }
+
+        p {
+            font-size: 18px;
+            color: #2c5a56;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .menu-button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #2f7167; /* Botón en tono verde menta oscuro */
+            color: #e6f7f5; /* Texto blanco menta claro */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .menu-button:hover {
+            opacity: 0.9;
+            background-color: #255a4f; /* Tono más oscuro al hacer hover */
+            transform: translateY(-2px);
+        }
+
+    </style>
 </head>
 <body>
+
     <h1>Calculadora de Raíces de Polinomios</h1>
     
-    <form action="/polinomio" method="POST">
-        <label for="polinomio">Ingresa el polinomio:</label><br>
-        <input type="text" id="polinomio" name="polinomio" value="{{ polinomio_str }}" placeholder="3*x^2 + 1" required><br><br>
+    <div class="form-container">
+        <form action="/polinomio" method="POST">
+            <label for="polinomio">Ingresa el polinomio:</label><br>
+            <input type="text" id="polinomio" name="polinomio" value="{{ polinomio_str }}" placeholder="3*x^2 + 1" required><br><br>
 
-        <input type="submit" value="Calcular Raíces">
-    </form>
+            <input type="submit" value="Calcular Raíces">
+        </form>
+
+        <!-- Botón para regresar al menú dentro del contenedor -->
+        <div class="button-container">
+            <button class="menu-button" onclick="window.location.href='/menu';">Volver al Menú</button>
+        </div>
+    </div>
 
     <!-- Mostrar las raíces calculadas -->
     {% if raices %}
@@ -24,5 +144,6 @@
         {% endfor %}
     </div>
     {% endif %}
+
 </body>
 </html>

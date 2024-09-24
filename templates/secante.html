@@ -1,44 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método de la Secante</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #fff5cc; /* Fondo amarillo claro */
+            color: #664d00; /* Texto en tono marrón oscuro */
+            background-image: url('/static/css/imagenes/especifica.png');
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            padding-top: 150px;
+        }
+
+        h1, h2 {
+            font-size: 36px;
+            color: #806600; /* Tono marrón oscuro */
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #ffe680; /* Fondo del contenedor en amarillo oscuro suave */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            color: #664d00; /* Color marrón oscuro */
+            display: block;
+            margin-bottom: 8px;
+            width: 100%;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #806600; /* Borde marrón oscuro */
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #806600; /* Fondo marrón oscuro */
+            color: #fff5cc; /* Texto amarillo claro */
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            opacity: 0.9;
+            background-color: #664d00; /* Más oscuro al hacer hover */
+            transform: translateY(-2px);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .menu-button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #806600; /* Fondo marrón oscuro */
+            color: #fff5cc; /* Texto amarillo claro */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .menu-button:hover {
+            opacity: 0.9;
+            background-color: #664d00; /* Más oscuro al hacer hover */
+            transform: translateY(-2px);
+        }
+
+        p {
+            font-size: 18px;
+            color: #664d00;
+        }
+    </style>
 </head>
 <body>
-    <h1>Método de la Secante</h1>
-    
-    <!-- Formulario para graficar la función -->
-    <form action="/metodo_secante" method="POST">
-        <label for="funcion">Función:</label><br>
-        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
 
-        <input type="submit" name="graficar" value="Graficar">
-    </form>
+    <h1>Método de la Secante</h1>
+
+    <div class="form-container">
+        <!-- Formulario para graficar la función -->
+        <form action="/metodo_secante" method="POST">
+            <label for="funcion">Función:</label><br>
+            <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
+
+            <input type="submit" name="graficar" value="Graficar">
+        </form>
+
+        <!-- Botón para regresar al menú -->
+        <div class="button-container">
+            <button class="menu-button" onclick="window.location.href='/menu';">Volver al Menú</button>
+        </div>
+    </div>
 
     <!-- Mostrar la gráfica si está disponible -->
     {% if fig_html %}
     <h2>Gráfico de la Función</h2>
     <div>{{ fig_html|safe }}</div>
-    {% endif %}
 
-    <!-- Inputs para el método de la secante, mostrados solo si la gráfica fue generada -->
-    {% if fig_html %}
-    <h2>Calcula la raíz con el Método de la Secante</h2>
-    <form action="/metodo_secante" method="POST">
-        <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
-        
-        <label for="a">Valor de a:</label><br>
-        <input type="number" id="a" name="a" step="any" required><br><br>
+    <div class="form-container">
+        <!-- Inputs para el método de la secante -->
+        <h2>Calcula la raíz con el Método de la Secante</h2>
+        <form action="/metodo_secante" method="POST">
+            <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
+            
+            <label for="a">Valor de a:</label><br>
+            <input type="number" id="a" name="a" step="any" required><br><br>
 
-        <label for="b">Valor de b:</label><br>
-        <input type="number" id="b" name="b" step="any" required><br><br>
+            <label for="b">Valor de b:</label><br>
+            <input type="number" id="b" name="b" step="any" required><br><br>
 
-        <label for="tol">Tolerancia (Error relativo):</label><br>
-        <input type="number" id="tol" name="tol" step="any" required><br><br>
+            <label for="tol">Tolerancia (Error relativo):</label><br>
+            <input type="number" id="tol" name="tol" step="any" required><br><br>
 
-        <input type="submit" name="calcular_secante" value="Calcular">
-    </form>
+            <input type="submit" name="calcular_secante" value="Calcular">
+        </form>
+    </div>
     {% endif %}
 
     <!-- Mostrar resultados del método de la secante si están disponibles -->
@@ -55,5 +167,6 @@
     <p>Error: El método de la secante no se puede aplicar.</p>
     {% endif %}
     {% endif %}
+
 </body>
 </html>
