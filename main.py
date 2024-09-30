@@ -92,6 +92,7 @@ def evaluador():
     resultado_radianes = None
     resultado_grados = None
     error = None
+    funcion = ""
     if request.method == 'POST':
         expresion = request.form['expresion']
         funcion = expresion #Se crea esta variable para que se pueda mostrar en la pagina una vez se haya enviado el formulario
