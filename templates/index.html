@@ -85,6 +85,15 @@
         .biseccion-button {
             background-color: #4a2727;
         }
+        .secante-button {
+            background-color: #806600;
+        }
+        .newton-button {
+            background-color: #d9796a;
+        }
+        .polinomio-button {
+            background-color: #2f7167;
+        }
         .button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
@@ -136,6 +145,15 @@
 
             <form action="/biseccion" method="get">
                 <button type="submit" class="button biseccion-button">Método de Bisección</button>
+            </form>
+            <form action="/metodo_secante" method="get">
+                <button type="submit" class="button secante-button">Método de Secante</button>
+            </form>
+            <form action="/newton" method="get">
+                <button type="submit" class="button newton-button">Método de Newton-Raphson</button>
+            </form>
+            <form action="/polinomio" method="get">
+                <button type="submit" class="button polinomio-button">Método de los Polinomios</button>
             </form>
 
         </div>

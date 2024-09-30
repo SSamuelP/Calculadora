@@ -39,10 +39,7 @@
         text-align: left;
     }
 
-    .menu-button {
-        background-color: #d9796a; /* Botón en tono salmón fuerte */
-    }
-
+    
     .help-button {
         position: absolute;
         top: 10px;
@@ -59,7 +56,7 @@
         justify-content: center;
         align-items: center;
     }
-
+    
     #help-box {
         display: none;
         background-color: #ffeae3; /* Fondo caja de ayuda rosa claro */
@@ -69,7 +66,7 @@
         margin-top: 10px;
         font-size: 14px;
     }
-
+    
     label {
         font-size: 16px;
         color: #5a3d31; /* Etiquetas en tono marrón rosado */
@@ -87,7 +84,7 @@
         font-size: 16px;
         box-sizing: border-box;
     }
-
+    
     button {
         padding: 12px;
         font-size: 16px;
@@ -98,13 +95,25 @@
         color: #ffeae3;
         transition: background-color 0.3s, transform 0.3s;
     }
+    .menu-button {
+    background-color: #d9796a; /* Botón en tono salmón fuerte */
+    }
 
     button:hover {
         opacity: 0.9;
         background-color: #b96b5a; /* Tono más oscuro al hacer hover */
         transform: translateY(-2px);
     }
-
+    input[type="submit"]{
+        padding: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        background-color: #d9796a; /* Fondo botón salmón */
+        color: #ffeae3;
+        transition: background-color 0.3s, transform 0.3s;
+    }
     h2 {
         margin-top: 30px;
         font-size: 24px;
@@ -162,15 +171,17 @@
 </style>
 <body>
     <h1>Método de Newton-Raphson</h1>
-    
+    <div class="form-container">
     <!-- Formulario para graficar la función -->
-    <form action="/newton" method="POST">
-        <label for="funcion">Función:</label><br>
-        <input type="text" id="funcion" name="funcion" value="{{ funcion }}" placeholder="x**3 - 2*x + 1" required><br><br>
+        <form action="/newton" method="POST">
+            <label for="funcion">Función:</label><br>
+            <input type="text" id="funcion" name="funcion" value="{{ funcion }}" placeholder="x**3 - 2*x + 1" required><br><br>
 
-        <input type="submit" name="graficar" value="Graficar">
-    </form>
-
+            <input type="submit" name="graficar" value="Graficar">
+            <!-- Botón para regresar al menú -->
+            <button class="menu-button" onclick="window.location.href='/';">Volver al Menú</button>
+        </form>
+    </div>
     <!-- Mostrar la gráfica si está disponible -->
     {% if fig_html %}
     <h2>Gráfico de la Función</h2>
