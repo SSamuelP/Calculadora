@@ -10,6 +10,7 @@ def newton_raphson(fun_str, x_0, steps=50, tol=1e-5):
     data = {
         'Iteración': [],
         'Valor inicial': [],
+        'Imagen Valor': [],
         'Raíz aproximada': [],
         'Error relativo': []
     }
@@ -23,9 +24,13 @@ def newton_raphson(fun_str, x_0, steps=50, tol=1e-5):
         error_relativo = abs((x_n - raiz_anterior) / x_n)
         raiz_anterior = x_n
 
+        #Calculo de f(a)
+        f_a = f(x_0)
+
         # Guardar datos en el DataFrame
         data['Iteración'].append(n)
         data['Valor inicial'].append(x_0)
+        data['Imagen Valor'].append(f_a)
         data['Raíz aproximada'].append(x_n)
         data['Error relativo'].append(error_relativo)
 
