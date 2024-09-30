@@ -8,7 +8,7 @@ def metodo_biseccion(f, a, b, tolerancia):
     fa = f.subs(x,a)
     fb = f.subs(x,b)
 
-    data = {'Iteración': [], 'a': [], 'b': [], 'Medio': [], 'Error Relativo': []}
+    data = {'Iteración': [], 'a': [], 'b': [], "f(a)": [], "f(b)": [], 'Raíz (r)': [], "f(r)": [], 'Error Relativo': []}
     iteracion = 0
     raiz_anterior = None
 
@@ -32,13 +32,19 @@ def metodo_biseccion(f, a, b, tolerancia):
         data['Iteración'].append(iteracion+1)
         data['a'].append(a)
         data['b'].append(b)
-        data['Medio'].append(medio)
+        data['f(a)'].append(fa)
+        data['f(b)'].append(fb)
+        data['Raíz (r)'].append(medio)
+        data['f(r)'].append(f_medio)
         data['Error Relativo'].append(error_relativo)
 
         if f_medio * fa < 0:
             b = medio
+            fb = f_medio
         else:
             a = medio
+            fa = f_medio
+            
         iteracion += 1
         raiz_anterior = medio
 
