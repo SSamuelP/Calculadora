@@ -38,8 +38,19 @@
             width: 100%;
             text-align: left;
         }
-        .menu-button {
-            background-color: #ffc107; 
+        .menu-button,
+        .clear-button,
+        .calculate-button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+            background-color: #ffc107;
+            margin: 5px;
+            width: 150px;
         }
         .help-button {
             position: absolute;
@@ -98,11 +109,11 @@
             opacity: 0.9;
             transform: translateY(-2px);
         }
-
-        .calculate-button {
-            background-color: #ffc107; 
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-
         button:hover {
             background-color: #e0a800; 
         }
@@ -132,6 +143,20 @@
         function toggleHelp() {
             const helpBox = document.getElementById('help-box');
             helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
+        }
+        // Función para borrar los resultados de derivadas
+        function clearResults() {
+            const resultContainer = document.querySelector('h2');
+            const resultList = document.querySelector('ul');
+
+            // Borra el título de resultados si existe
+            if (resultContainer) {
+                resultContainer.remove();
+            }
+            // Borra la lista de derivadas si existe
+            if (resultList) {
+                resultList.remove();
+            }
         }
     </script>
     <!-- Cargar MathJax para renderizar fórmulas matemáticas -->
@@ -166,8 +191,10 @@
         <input type="number" id="orden" name="orden" min="1" required>
         <br>
 
-        <button type="submit" class="calculate-button">Calcular Derivada</button>
+        <button type="submit" class="calculate-button">Calcular</button>
         <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        <button type="button" class="clear-button" onclick="clearResults()">Borrar</button>
+
     </form>
 
     {% if derivadas %}

@@ -44,8 +44,20 @@
             width: 100%;
             text-align: left;
         }
-        .menu-button {
+        .menu-button,
+        .clear-button,
+        button[type="submit"] {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
             background-color: #a074c4; 
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+            margin: 5px;
+            width: 150px;
         }
         .help-button {
             position: absolute;
@@ -177,6 +189,25 @@
             const helpBox = document.getElementById('help-box');
             helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
         }
+        // Función para borrar resultados, el título y la tabla
+        function clearResults() {
+            const resultContainer = document.querySelector('.result-container');
+            const resultTable = document.getElementById('result-table');
+            const resultTitle = document.querySelector('h3');
+
+            // Borra el contenedor de resultados si existe
+            if (resultContainer) {
+                resultContainer.remove();
+            }
+            // Borra la tabla de resultados si existe
+            if (resultTable) {
+                resultTable.remove();
+            }
+            // Borra el título de la tabla si existe
+            if (resultTitle) {
+                resultTitle.remove();
+            }
+        }
     </script>
 </head>
 <body>
@@ -218,6 +249,8 @@
 
         <button type="submit">Calcular</button>
         <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
+        <button type="button" class="clear-button" onclick="clearResults()">Borrar Todo</button>
+
     </form>
 
     {% if resultado is not none %}
@@ -230,7 +263,7 @@
         </div>
 
         <h3>Tabla de iteraciones</h3>
-        <div>{{ tabla_html|safe }}</div>
+        <div id="result-table">{{ tabla_html|safe }}</div>
     {% endif %}
 </body>
 </html>

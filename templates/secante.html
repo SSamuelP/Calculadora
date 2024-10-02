@@ -121,15 +121,19 @@
         <form action="/metodo_secante" method="POST">
             <label for="funcion">Función:</label><br>
             <input type="text" id="funcion" name="funcion" value="{{ funcion }}" required><br><br>
-            <input type="submit" name="graficar" value="Graficar">
-            <button class="menu-button" onclick="window.location.href='/';">Volver al Menú</button>
+            
+            <div class="button-container">
+                <input type="submit" name="graficar" value="Graficar">
+                <button class="menu-button" onclick="window.location.href='/'; return false;">Volver al Menú</button>
+                <button type="button" class="menu-button" onclick="borrarPantalla()">Borrar Todo</button>
+            </div>
         </form>
     </div>
 
     <!-- Mostrar la gráfica si está disponible -->
     {% if fig_html %}
     <h2>Gráfico de la Función</h2>
-    <div>{{ fig_html|safe }}</div>
+    <div id="grafico">{{ fig_html|safe }}</div>
 
     <div class="form-container">
         <!-- Inputs para el método de la secante -->
@@ -146,25 +150,54 @@
             <label for="tol">Tolerancia (Error relativo):</label><br>
             <input type="number" id="tol" name="tol" step="any" required><br><br>
 
-            <input type="submit" name="calcular_secante" value="Calcular">
+            <div class="button-container">
+                <input type="submit" name="calcular_secante" value="Calcular">
+            </div>
         </form>
     </div>
     {% endif %}
 
     <!-- Mostrar resultados del método de la secante si están disponibles -->
     {% if secante_result %}
-    <h2>Resultados</h2>
+    <h2 id="resultados-titulo">Resultados</h2>
     {% if secante_result.raiz is not none %}
-    <p>Raíz aproximada: {{ secante_result.raiz }}</p>
-    <p>Error relativo final: {{ secante_result.error_relativo }}</p>
-    <p>Número de iteraciones: {{ secante_result.iteraciones }}</p>
+    <div id="resultados-contenido">
+        <p>Raíz aproximada: {{ secante_result.raiz }}</p>
+        <p>Error relativo final: {{ secante_result.error_relativo }}</p>
+        <p>Número de iteraciones: {{ secante_result.iteraciones }}</p>
 
-    <h3>Tabla de Iteraciones:</h3>
-    <div>{{ secante_result.tabla|safe }}</div>
+        <h3>Tabla de Iteraciones:</h3>
+        <div id="tabla-iteraciones">{{ secante_result.tabla|safe }}</div>
+    </div>
     {% else %}
-    <p>Error: El método de la secante no se puede aplicar.</p>
+    <div id="resultados-contenido">
+        <p>Error: El método de la secante no se puede aplicar.</p>
+    </div>
     {% endif %}
     {% endif %}
 
+    <script>
+        function borrarPantalla() {
+            // Limpiar los inputs
+            document.getElementById('funcion').value = '';
+            var a = document.getElementById('a');
+            var b = document.getElementById('b');
+            var tol = document.getElementById('tol');
+            if (a) a.value = '';  // Elimina el valor de a si existe el input
+            if (b) b.value = '';  // Elimina el valor de b si existe el input
+            if (tol) tol.value = '';  // Elimina el valor de tol si existe el input
+
+            // Limpiar los gráficos y resultados si existen
+            var grafico = document.getElementById('grafico');
+            var tituloResultados = document.getElementById('resultados-titulo');
+            var contenidoResultados = document.getElementById('resultados-contenido');
+            var tablaIteraciones = document.getElementById('tabla-iteraciones');
+
+            if (grafico) grafico.innerHTML = '';  // Eliminar el gráfico
+            if (tituloResultados) tituloResultados.innerHTML = '';  // Eliminar el título "Resultados"
+            if (contenidoResultados) contenidoResultados.innerHTML = '';  // Eliminar el contenido de los resultados
+            if (tablaIteraciones) tablaIteraciones.innerHTML = '';  // Eliminar la tabla de iteraciones
+        }
+    </script>
 </body>
 </html>

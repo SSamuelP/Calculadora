@@ -172,26 +172,25 @@
 <body>
     <h1>Método de Newton-Raphson</h1>
     <div class="form-container">
-    <!-- Formulario para graficar la función -->
-        <form action="/newton" method="POST">
+        <form id="form-calculo" action="/newton" method="POST">
             <label for="funcion">Función:</label><br>
             <input type="text" id="funcion" name="funcion" value="{{ funcion }}" placeholder="x**3 - 2*x + 1" required><br><br>
 
             <input type="submit" name="graficar" value="Graficar">
-            <!-- Botón para regresar al menú -->
-            <button class="menu-button" onclick="window.location.href='/';">Volver al Menú</button>
+            <button class="menu-button" onclick="window.location.href='/'; return false;">Volver al Menú</button>
+            <!-- Botón Borrar -->
+            <button type="button" onclick="borrarPantalla()">Borrar Todo</button>
         </form>
     </div>
-    <!-- Mostrar la gráfica si está disponible -->
+
     {% if fig_html %}
     <h2>Gráfico de la Función</h2>
-    <div>{{ fig_html|safe }}</div>
+    <div id="grafico">{{ fig_html|safe }}</div>
     {% endif %}
 
-    <!-- Inputs para el método de Newton-Raphson, mostrados solo si la gráfica fue generada -->
     {% if fig_html %}
     <h2>Calcula la raíz con el Método de Newton-Raphson</h2>
-    <form action="/newton" method="POST">
+    <form id="form-calculo-newton" action="/newton" method="POST">
         <input type="hidden" name="funcion" value="{{ request.form['funcion'] }}">
         
         <label for="x_0">Valor inicial:</label><br>
@@ -201,22 +200,50 @@
         <input type="number" id="tol" name="tol" step="any" placeholder="0.00001" required><br><br>
 
         <input type="submit" name="calcular_newton" value="Calcular">
+        <!-- Botón Volver al Menú -->
+        <button class="menu-button" onclick="window.location.href='/'; return false;">Volver al Menú</button>
+        
     </form>
     {% endif %}
 
-    <!-- Mostrar resultados del método de Newton-Raphson si están disponibles -->
     {% if newton_result %}
-    <h2>Resultados</h2>
+    <h2 id="resultados-titulo">Resultados</h2>
     {% if newton_result.raiz is not none %}
-    <p>Raíz aproximada: {{ newton_result.raiz }}</p>
-    <p>Error relativo final: {{ newton_result.error_relativo }}</p>
-    <p>Número de iteraciones: {{ newton_result.iteraciones }}</p>
+    <div id="resultados-contenido">
+        <p>Raíz aproximada: {{ newton_result.raiz }}</p>
+        <p>Error relativo final: {{ newton_result.error_relativo }}</p>
+        <p>Número de iteraciones: {{ newton_result.iteraciones }}</p>
 
-    <h3>Tabla de Iteraciones:</h3>
-    <div>{{ newton_result.tabla|safe }}</div>
+        <h3>Tabla de Iteraciones:</h3>
+        <div id="tabla-iteraciones">{{ newton_result.tabla|safe }}</div>
+    </div>
     {% else %}
-    <p>Error: El método de Newton-Raphson no se puede aplicar.</p>
+    <div id="resultados-contenido">
+        <p>Error: El método de Newton-Raphson no se puede aplicar.</p>
+    </div>
     {% endif %}
     {% endif %}
+
+    <script>
+        function borrarPantalla() {
+            // Limpiar los inputs
+            document.getElementById('funcion').value = '';
+            var x_0 = document.getElementById('x_0');
+            var tol = document.getElementById('tol');
+            if (x_0) x_0.value = '';  // Elimina el valor de x_0 si existe el input
+            if (tol) tol.value = '';  // Elimina el valor de tol si existe el input
+
+            // Limpiar los gráficos y resultados si existen
+            var grafico = document.getElementById('grafico');
+            var tituloResultados = document.getElementById('resultados-titulo');
+            var contenidoResultados = document.getElementById('resultados-contenido');
+            var tablaIteraciones = document.getElementById('tabla-iteraciones');
+
+            if (grafico) grafico.innerHTML = '';  // Eliminar el gráfico
+            if (tituloResultados) tituloResultados.innerHTML = '';  // Eliminar el título "Resultados"
+            if (contenidoResultados) contenidoResultados.innerHTML = '';  // Eliminar el contenido de los resultados
+            if (tablaIteraciones) tablaIteraciones.innerHTML = '';  // Eliminar la tabla de iteraciones
+        }
+    </script>
 </body>
 </html>

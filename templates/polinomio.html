@@ -91,22 +91,29 @@
             font-size: 18px;
             color: #2c5a56;
         }
-
         .button-container {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
 
-        .menu-button {
+        button {
+            flex: 1;
             padding: 12px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
             border: none;
-            background-color: #2f7167; /* Botón en tono verde menta oscuro */
-            color: #e6f7f5; /* Texto blanco menta claro */
             transition: background-color 0.3s, transform 0.3s;
+            color: white;
+        }
+
+
+        .calculate-button {
+            background-color: #2f7167; 
+        }
+        .menu-button {
+            background-color: #2f7167;
         }
 
         .menu-button:hover {
@@ -121,20 +128,25 @@
 
     <h1>Calculadora de Raíces de Polinomios</h1>
     
-    <div class="form-container">
-        <form action="/polinomio" method="POST">
+    
+    <form action="/polinomio" method="POST">
+
+        
+        <div class="form-container">
+
             <label for="polinomio">Ingresa el polinomio:</label><br>
             <input type="text" id="polinomio" name="polinomio" value="{{ polinomio_str }}" placeholder="3*x^2 + 1" required><br><br>
 
-            <input type="submit" value="Calcular Raíces">
-        </form>
-
-        <!-- Botón para regresar al menú dentro del contenedor -->
-        <div class="button-container">
-            <button class="menu-button" onclick="window.location.href='/';">Volver al Menú</button>
+            <div class="button-container">
+                <input type="submit" class="calculate-button" value="Calcular Raíces">
+                <button type="button" class="menu-button" onclick="window.location.href='/'">Regresar</button>
+                <button type="button" class="menu-button" onclick="borrarPantalla()">Borrar</button>
+            </div>
+            
         </div>
-    </div>
 
+    </form>
+        
     <!-- Mostrar las raíces calculadas -->
     {% if raices %}
     <h2>Raíces Calculadas</h2>
@@ -145,5 +157,18 @@
     </div>
     {% endif %}
 
+    <script>
+        function borrarPantalla() {
+            // Limpiar la entrada de texto del polinomio
+            document.getElementById('polinomio').value = '';
+    
+            // Seleccionar y limpiar el título "Raíces Calculadas" y las raíces mostradas
+            var elementosRaices = document.querySelectorAll('h2, div[style="text-align: center;"]');
+            elementosRaices.forEach(function(elemento) {
+                elemento.innerHTML = ''; // Eliminar el contenido de ambos elementos
+            });
+        }
+    </script>
+    
 </body>
 </html>
