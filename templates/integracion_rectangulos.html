@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integración por Rectángulos</title>
+</head>
+<body>
+    <h1>Integración por Rectángulos</h1>
+    <form method="POST" action="/integracion_rectangulos">
+        <label for="funcion">Función (en términos de x):</label>
+        <input type="text" id="funcion" name="funcion" required>
+        <br>
+
+        <label for="lim_inferior">Límite inferior (a):</label>
+        <input type="number" id="lim_inferior" name="lim_inferior" step="any" required>
+        <br>
+
+        <label for="lim_superior">Límite superior (b):</label>
+        <input type="number" id="lim_superior" name="lim_superior" step="any" required>
+        <br>
+
+        <label for="particiones">Número de particiones (n):</label>
+        <input type="number" id="particiones" name="particiones" min="1" required>
+        <br>
+
+        <button type="submit">Calcular Integral</button>
+    </form>
+
+    {% if resultado_derecha is not none %}
+        <h2>Resultados de la Integral</h2>
+        <p>Área por el método del punto derecho: {{ resultado_derecha }}</p>
+        <p>Área por el método del punto izquierdo: {{ resultado_izquierda }}</p>
+        <p>Área por el método del punto medio: {{ resultado_medio }}</p>
+    {% endif %}
+</body>
+</html>
