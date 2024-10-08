@@ -15,6 +15,11 @@ from derivadas import derivar_funcion
 from secante import secant
 from newton import newton_raphson
 from polinomios import calcular_raices
+from integracion_rectangulos import integracion_rectangulos_sympy
+from integracion_trapecios import integracion_trapecio_con_error
+from integracion_simson_1_3 import integracion_simpson_con_error
+from integracion_simpson_1_8 import integracion_simpson_3_8_con_error
+from integracion_montecarlo import integracion_montecarlo_contar_puntos
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -280,6 +285,124 @@ def polinomio():
         raices = calcular_raices(polinomio_str)
 
     return render_template('polinomio.html', raices=raices, polinomio_str = polinomio_str)
+
+# Ruta para integración por rectángulos
+@app.route("/integracion_rectangulos", methods=["GET", "POST"])
+def integracion_rectangulos():
+    resultado_derecha = None
+    resultado_izquierda = None
+    resultado_medio = None
+
+    if request.method == "POST":
+        funcion = request.form['funcion']
+        limite_inferior = float(request.form['lim_inferior'])
+        limite_superior = float(request.form['lim_superior'])
+        particiones = int(request.form['particiones'])
+
+        # Llamar a la función de integración
+        resultado_derecha, resultado_izquierda, resultado_medio = integracion_rectangulos_sympy(
+            funcion, limite_inferior, limite_superior, particiones)
+
+    return render_template("integracion_rectangulos.html",
+                           resultado_derecha=resultado_derecha,
+                           resultado_izquierda=resultado_izquierda,
+                           resultado_medio=resultado_medio)
+
+# Ruta para integración por trapecios
+@app.route("/integracion_trapecios", methods=["GET", "POST"])
+def integracion_trapecios():
+    resultado = None
+    error_richardson = None
+    error_truncamiento = None
+
+    if request.method == "POST":
+        funcion = request.form['funcion']
+        limite_inferior = float(request.form['lim_inferior'])
+        limite_superior = float(request.form['lim_superior'])
+        particiones = int(request.form['particiones'])
+
+        # Llamar a la función de integración
+        resultado, error_richardson, error_truncamiento = integracion_trapecio_con_error(
+            funcion, limite_inferior, limite_superior, particiones)
+
+    return render_template("integracion_trapecios.html",
+                           resultado=resultado,
+                           error_richardson=error_richardson,
+                           error_truncamiento=error_truncamiento)
+
+# Ruta para integración de Simpson 1/3
+@app.route("/integracion_simpson", methods=["GET", "POST"])
+def integracion_simpson():
+    resultado = None
+    error_estimado = None
+
+    if request.method == "POST":
+        funcion = request.form['funcion']
+        limite_inferior = float(request.form['lim_inferior'])
+        limite_superior = float(request.form['lim_superior'])
+        particiones = int(request.form['particiones'])
+
+        # Verificar que el número de particiones sea par
+        if particiones % 2 != 0:
+            error_estimado = "El número de particiones debe ser par para el método de Simpson."
+        else:
+            # Llamar a la función de integración de Simpson
+            resultado, error_estimado = integracion_simpson_con_error(
+                funcion, limite_inferior, limite_superior, particiones)
+
+    return render_template("integracion_simpson.html",
+                           resultado=resultado,
+                           error_estimado=error_estimado)
+
+# Ruta para integración de Simpson 3/8
+@app.route("/integracion_simpson_3_8", methods=["GET", "POST"])
+def integracion_simpson_3_8():
+    resultado = None
+    error_estimado = None
+    error_msg = None
+
+    if request.method == "POST":
+        try:
+            funcion = request.form['funcion']
+            limite_inferior = float(request.form['lim_inferior'])
+            limite_superior = float(request.form['lim_superior'])
+            particiones = int(request.form['particiones'])
+
+            # Llamar a la función de integración de Simpson 3/8
+            resultado, error_estimado = integracion_simpson_3_8_con_error(
+                funcion, limite_inferior, limite_superior, particiones)
+        except ValueError as e:
+            error_msg = str(e)
+
+    return render_template("integracion_simpson_3_8.html",
+                           resultado=resultado,
+                           error_estimado=error_estimado,
+                           error_msg=error_msg)
+
+# Ruta para integración por Monte Carlo
+@app.route("/integracion_montecarlo", methods=["GET", "POST"])
+def integracion_montecarlo():
+    resultado = None
+    puntos_dentro = None
+    error_msg = None
+
+    if request.method == "POST":
+        try:
+            funcion = request.form['funcion']
+            limite_inferior = float(request.form['lim_inferior'])
+            limite_superior = float(request.form['lim_superior'])
+            num_puntos = int(request.form['num_puntos'])
+
+            # Llamar a la función de integración de Monte Carlo
+            resultado, puntos_dentro = integracion_montecarlo_contar_puntos(
+                funcion, limite_inferior, limite_superior, num_puntos)
+        except ValueError as e:
+            error_msg = str(e)
+
+    return render_template("integracion_montecarlo.html",
+                           resultado=resultado,
+                           puntos_dentro=puntos_dentro,
+                           error_msg=error_msg)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
