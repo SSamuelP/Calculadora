@@ -3,7 +3,7 @@ import sympy as sp
 from scipy import integrate
 import random
 
-def integracion_simpson_con_error(expr, a, b, n):
+def integracion_simpson_untercio_con_error(expr, a, b, n):
     """
     Calcula la integral de una expresión simbólica en el intervalo [a, b] usando el método de Simpson 1/3 y estima el error.
 

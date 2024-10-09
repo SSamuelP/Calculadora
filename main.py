@@ -17,8 +17,8 @@ from newton import newton_raphson
 from polinomios import calcular_raices
 from integracion_rectangulos import integracion_rectangulos_sympy
 from integracion_trapecios import integracion_trapecio_con_error
-from integracion_simson_1_3 import integracion_simpson_con_error
-from integracion_simpson_1_8 import integracion_simpson_3_8_con_error
+from integracion_simson_untercio import integracion_simpson_untercio_con_error
+from integracion_simpson_tresoctavos import integracion_simpson_tresoctavos_con_error
 from integracion_montecarlo import integracion_montecarlo_contar_puntos
 
 algebra = boolean.BooleanAlgebra()
@@ -331,8 +331,8 @@ def integracion_trapecios():
                            error_truncamiento=error_truncamiento)
 
 # Ruta para integración de Simpson 1/3
-@app.route("/integracion_simpson", methods=["GET", "POST"])
-def integracion_simpson():
+@app.route("/integracion_simpson_untercio", methods=["GET", "POST"])
+def integracion_simpson_untercio():
     resultado = None
     error_estimado = None
 
@@ -347,16 +347,16 @@ def integracion_simpson():
             error_estimado = "El número de particiones debe ser par para el método de Simpson."
         else:
             # Llamar a la función de integración de Simpson
-            resultado, error_estimado = integracion_simpson_con_error(
+            resultado, error_estimado = integracion_simpson_untercio_con_error(
                 funcion, limite_inferior, limite_superior, particiones)
 
-    return render_template("integracion_simpson.html",
+    return render_template("integracion_simpson_untercio.html",
                            resultado=resultado,
                            error_estimado=error_estimado)
 
 # Ruta para integración de Simpson 3/8
-@app.route("/integracion_simpson_3_8", methods=["GET", "POST"])
-def integracion_simpson_3_8():
+@app.route("/integracion_simpson_tresoctavos", methods=["GET", "POST"])
+def integracion_simpson_tresoctavos():
     resultado = None
     error_estimado = None
     error_msg = None
@@ -369,12 +369,12 @@ def integracion_simpson_3_8():
             particiones = int(request.form['particiones'])
 
             # Llamar a la función de integración de Simpson 3/8
-            resultado, error_estimado = integracion_simpson_3_8_con_error(
+            resultado, error_estimado = integracion_simpson_tresoctavos_con_error(
                 funcion, limite_inferior, limite_superior, particiones)
         except ValueError as e:
             error_msg = str(e)
 
-    return render_template("integracion_simpson_3_8.html",
+    return render_template("integracion_simpson_tresoctavos.html",
                            resultado=resultado,
                            error_estimado=error_estimado,
                            error_msg=error_msg)

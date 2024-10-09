@@ -94,6 +94,21 @@
         .polinomio-button {
             background-color: #2f7167;
         }
+        .integracion_rectangulos-button {
+            background-color: #162d92;
+        }
+        .integracion_montecarlo-button {
+            background-color: #241c78;
+        }
+        .integracion_trapecios-button {
+            background-color: #661c78;
+        }
+        .integracion_simpson_untercio-button {
+            background-color: #92168a;
+        }
+        .integracion_simpson_tresoctavos-button {
+            background-color: #921629;
+        }
         .button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
@@ -101,6 +116,7 @@
         .button:active {
             transform: translateY(0);
         }
+        
     </style>
 </head>
 <body>
@@ -155,7 +171,21 @@
             <form action="/polinomio" method="get">
                 <button type="submit" class="button polinomio-button">Método de los Polinomios</button>
             </form>
-
+            <form action="/integracion_montecarlo" method="get">
+                <button type="submit" class="button integracion_montecarlo-button">Integración por Montecarlo</button>
+            </form>
+            <form action="/integracion_rectangulos" method="get">
+                <button type="submit" class="button integracion_rectangulos-button">Integración por rectángulos</button>
+            </form>
+            <form action="/integracion_trapecios" method="get">
+                <button type="submit" class="button integracion_trapecios-button">Integración por Trapecios</button>
+            </form>
+            <form action="/integracion_simpson_untercio" method="get">
+                <button type="submit" class="button integracion_simpson_untercio-button">Integración por Simpson 1/3</button>
+            </form>
+            <form action="/integracion_simpson_tresoctavos" method="get">
+                <button type="submit" class="button integracion_simpson_tresoctavos-button">Integración por Simpson 3/8</button>
+            </form>
         </div>
     </main>
 </body>

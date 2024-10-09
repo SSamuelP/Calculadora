@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integración por Rectángulos</title>
+    <title>Integración por Simpson 3/8</title>
 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f7f3e9;
-            background-image: url('/static/css/imagenes/integracion.png');
+            background-image: url('/static/css/imagenes/simpson.png');
             background-position: center center;
             background-size: contain;
             background-repeat: no-repeat;
@@ -52,6 +52,31 @@
             display: inline-block;
             margin: 5px;
             width: 150px;
+        }
+        .help-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #8c6e54;
+            border: none;
+            color: #ffeadd;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #help-box {
+            display: none;
+            background-color: #ffeadd;
+            color: #4a3b2c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
         }
         label {
             font-size: 16px;
@@ -99,6 +124,12 @@
             color: #4a3b2c;
         }
 
+        h3 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #6e5743;
+        }
+
         .result-container {
             background-color: #f7f3e9;
             padding: 15px;
@@ -108,27 +139,44 @@
             text-align: left;
         }
     </style>
+
     <script>
-        // Función para borrar los resultados
+        function toggleHelp() {
+            const helpBox = document.getElementById('help-box');
+            helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
+        }
+
         function clearResults() {
             const resultContainer = document.querySelector('.result-container');
-            const resultTitle = document.querySelector('h2');
-
-            // Borra el contenedor de resultados si existe
             if (resultContainer) {
                 resultContainer.remove();
             }
-            // Borra el título de la tabla si existe
-            if (resultTitle) {
-                resultTitle.remove();
-            }
         }
     </script>
-
 </head>
+
 <body>
-    <h1>Integración por Rectángulos</h1>
-    <form method="POST" action="/integracion_rectangulos">
+    <h1>Integración por Simpson 3/8</h1>
+
+    <form method="POST" action="/integracion_simpson_tresoctavos">
+
+        <!-- Botón de ayuda -->
+        <button type="button" class="help-button" onclick="toggleHelp()">?</button>
+
+        <!-- Recuadro de ayuda -->
+        <div id="help-box">
+            <h3>Modo de Uso</h3>
+            <li> El símbolo del exponente es <b>**</b>, no utilice: <b>^</b>.</li>
+            <li> Raíz cuadrada se escribe como <code>sqrt(x)</code></li>
+            <li> Logaritmo natural se escribe como <code>ln(x)</code></li>
+            <li> Coseno se escribe como <code>cos(x)</code></li>
+            <li> Seno se escribe como <code>sin(x)</code></li>
+            <li> Tangente se escribe como <code>tan(x)</code></li>
+            <li> Exponencial o Euler se escribe como <code>exp(x)</code></li>
+            <li> Las trigonométricas inversas como <code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code></li>
+            <li> Para multiplicar el valor dentro de la función, debe ser tipo: <code>sin(2*x)</code> Y no <code>sin(2x)</code></li>
+        </div>
+
         <label for="funcion">Función (en términos de x):</label>
         <input type="text" id="funcion" name="funcion" required>
         <br>
@@ -141,8 +189,8 @@
         <input type="number" id="lim_superior" name="lim_superior" step="any" required>
         <br>
 
-        <label for="particiones">Número de particiones (n):</label>
-        <input type="number" id="particiones" name="particiones" min="1" required>
+        <label for="particiones">Número de particiones (múltiplo de 3):</label>
+        <input type="number" id="particiones" name="particiones" min="3" step="3" required>
         <br>
 
         <button type="submit">Calcular Integral</button>
@@ -150,12 +198,15 @@
         <button type="button" class="clear-button" onclick="clearResults()">Borrar Todo</button>
     </form>
 
-    {% if resultado_derecha is not none %}
+    {% if error_msg %}
+        <p style="color:red;">{{ error_msg }}</p>
+    {% endif %}
+
+    {% if resultado is not none %}
         <div class="result-container">
             <h2>Resultados de la Integral</h2>
-            <p>Área por el método del punto derecho: {{ resultado_derecha }}</p>
-            <p>Área por el método del punto izquierdo: {{ resultado_izquierda }}</p>
-            <p>Área por el método del punto medio: {{ resultado_medio }}</p>
+            <p>Área aproximada por el método de Simpson 3/8: {{ resultado }}</p>
+            <p>Error estimado: {{ error_estimado }}</p>
         </div>
     {% endif %}
 </body>

@@ -3,7 +3,7 @@ import sympy as sp
 from scipy import integrate
 import random
 
-def integracion_simpson_3_8_con_error(expr, a, b, n):
+def integracion_simpson_tresoctavos_con_error(expr, a, b, n):
     """
     Calcula la integral de una expresión simbólica en el intervalo [a, b] usando el método de Simpson 3/8 y estima el error.
 
