@@ -20,6 +20,7 @@ from integracion_trapecios import integracion_trapecio_con_error
 from integracion_simson_untercio import integracion_simpson_untercio_con_error
 from integracion_simpson_tresoctavos import integracion_simpson_tresoctavos_con_error
 from integracion_montecarlo import integracion_montecarlo_contar_puntos
+from graficadora_3d import generate_3d_graph
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -403,6 +404,18 @@ def integracion_montecarlo():
                            resultado=resultado,
                            puntos_dentro=puntos_dentro,
                            error_msg=error_msg)
+
+@app.route('/grafica_3d', methods=["GET",'POST'])  
+def generate_graph():
+    graph_image = None
+    if request.method == "POST": 
+        func1_str = request.form['func1']  
+        func2_str = request.form['func2']
+        
+        graph_image = generate_3d_graph(func1_str, func2_str)
+        
+    # Enviar la imagen a la página web
+    return render_template('graficadora_3d.html', graph_image=graph_image)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)

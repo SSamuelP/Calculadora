@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graficadora 3D</title>
+</head>
+<body>
+    <h1>Graficadora 3D de un sólido de revolución</h1>
+    <p>Ingresa las funciones para generar el sólido de revolución.</p>
+    
+    <form action="/generate_graph" method="POST"> <!-- Cambiado method a POST -->
+        <label for="func1">Función 1 (y1):</label>
+        <input type="text" id="func1" name="func1" required>
+        <br><br>
+        <label for="func2">Función 2 (y2):</label>
+        <input type="text" id="func2" name="func2" required>
+        <br><br>
+        <button type="submit">Generar Gráfica</button>
+    </form>
+
+    {% if graph_image %}
+        <h2>Gráfica Generada:</h2>
+        <img src="{{ graph_image }}" alt="Gráfica 3D">
+    {% endif %}
+</body>
+</html>
