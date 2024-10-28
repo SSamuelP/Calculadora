@@ -34,3 +34,5 @@ truth-table-generator==2.0.0
 tzdata==2024.1
 wcwidth==0.2.13
 Werkzeug==2.2.2
+scipy
+matplotlib
