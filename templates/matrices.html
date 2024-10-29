@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Álgebra Matricial</title>
+    <style>
+        /* Definimos el color rosa palo */
+        :root {
+            --color-principal: #D8A7B1;
+            --color-texto: #4A4A4A; /* Un gris oscuro para contraste */
+            --color-fondo: #F8F2F4; /* Un fondo suave */
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: var(--color-principal);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: white;
+            border: 2px solid var(--color-principal);
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--color-principal);
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid var(--color-principal);
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: var(--color-principal);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #C08B98; /* Un tono ligeramente más oscuro */
+        }
+
+        .resultado {
+            width: 300px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: var(--color-principal);
+        }
+
+        pre {
+            background-color: #F1E8EB;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+            white-space: pre-wrap;
+            color: var(--color-texto);
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Álgebra Matricial</h1>
+    
+    <form method="POST">
+        <label for="matriz">Ingrese la matriz (formato: [[a,b],[c,d]]):</label>
+        <input name="matriz" rows="3" cols="30" value="{{ matriz }}" required></input>
+
+        <label for="operacion">Seleccione la operación:</label>
+        <select name="operacion" required>
+            <option value="determinante">Determinante</option>
+            <option value="traspuesta">Traspuesta</option>
+            <option value="inversa">Inversa</option>
+            <option value="diagonal">Diagonal</option>
+            <option value="factorizacion_lu">Factorización LU</option>
+            <option value="potencia">Potencia</option>
+            <option value="gauss_jordan">Gauss-Jordan</option>
+        </select>
+
+        <label for="potencia">Potencia (solo si se elige "Potencia"):</label>
+        <input type="number" name="potencia">
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <div class="resultado">
+        {% if resultado %}
+            <h2>Resultado:</h2>
+            <pre>{{ resultado }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>
