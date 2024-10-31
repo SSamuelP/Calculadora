@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplicación de Ajuste de Curvas</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
+        h1 { color: #4CAF50; }
+        form { background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input[type="number"] { width: 100%; padding: 8px; margin: 5px 0 15px; border-radius: 4px; border: 1px solid #ddd; }
+        #point_inputs { margin-top: 15px; }
+        button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        h2, h3 { margin-top: 30px; color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        ul li { background: #eee; margin: 5px 0; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Aplicación de Ajuste de Curvas</h1>
+
+    <!-- Formulario para capturar datos -->
+    <form id="curveForm" onsubmit="return false;">
+        <label for="num_points">Número de Puntos:</label>
+        <input type="number" id="num_points" name="num_points" min="1" required>
+
+        <label for="degree">Grado de Ajuste:</label>
+        <input type="number" id="degree" name="degree" min="1" required>
+
+        <div id="point_inputs"></div>
+
+        <button type="button" onclick="ajuste_curvas()">Ajustar Curva</button>
+    </form>
+
+    <!-- Contenedor de la gráfica -->
+    <div id="plotly-graph" style="width:600px;height:400px;margin-top:20px;"></div>
+
+    <!-- JavaScript para añadir automáticamente los campos de puntos en función del número ingresado -->
+    <script>
+        document.getElementById('num_points').addEventListener('input', function() {
+            let numPoints = parseInt(this.value);
+            let container = document.getElementById('point_inputs');
+            container.innerHTML = '';
+
+            if (numPoints > 0) {
+                for (let i = 1; i <= numPoints; i++) {
+                    container.innerHTML += `
+                        <label for="x${i}">x${i}:</label>
+                        <input type="number" step="any" name="x${i}" id="x${i}" required>
+                        <label for="y${i}">y${i}:</label>
+                        <input type="number" step="any" name="y${i}" id="y${i}" required>
+                        <br><br>
+                    `;
+                }
+            }
+        });
+
+        function ajuste_curvas() {
+            const numPoints = document.getElementById('num_points').value;
+            const degree = document.getElementById('degree').value;
+            const pointInputs = document.getElementById('point_inputs').getElementsByTagName('input');
+            let data = { num_points: numPoints, degree: degree };
+
+            // Captura los valores de cada punto x e y
+            for (let i = 0; i < pointInputs.length; i += 2) {
+                const xValue = pointInputs[i].value;
+                const yValue = pointInputs[i + 1].value;
+                data[`x${i / 2 + 1}`] = xValue;
+                data[`y${i / 2 + 1}`] = yValue;
+            }
+
+            fetch('/ajuste_curvas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert("Error: " + result.error);
+                    return;
+                }
+
+                const xOriginal = result.x_original;
+                const yOriginal = result.y_original;
+                const curves = result.curves;
+
+                const traces = [
+                    {
+                        x: xOriginal,
+                        y: yOriginal,
+                        mode: 'markers',
+                        name: 'Datos Originales',
+                        marker: { color: 'black' }
+                    }
+                ];
+
+                curves.forEach(curve => {
+                    traces.push({
+                        x: curve.x_values,
+                        y: curve.y_values,
+                        mode: 'lines',
+                        name: `Ajuste de Grado ${curve.degree}`
+                    });
+                });
+
+                const layout = {
+                    title: 'Ajuste de Curvas Polinomiales',
+                    xaxis: { title: 'X' },
+                    yaxis: { title: 'Y' }
+                };
+
+                Plotly.newPlot('plotly-graph', traces, layout);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
