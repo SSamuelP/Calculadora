@@ -109,6 +109,12 @@
         .integracion_simpson_tresoctavos-button {
             background-color: #921629;
         }
+        .matrices {
+            background-color: #D8A7B1;
+        }
+        .grafica_3d {
+            background-color: chartreuse;
+        }
         .button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
@@ -150,6 +156,9 @@
             <form action="/graficadora" method="get">
                 <button type="submit" class="button graficadora-button">Graficadora</button>
             </form>
+            <form action="/grafica_3d" method="get">
+                <button type="submit" class="button grafica_3d">Gráfica de Solidos de Revolución</button>
+            </form>
 
             <form action="/falsa_posicion" method="get">
                 <button type="submit" class="button falsa_regla-button">Método de la Regla Falsa</button>
@@ -186,8 +195,8 @@
             <form action="/integracion_simpson_tresoctavos" method="get">
                 <button type="submit" class="button integracion_simpson_tresoctavos-button">Integración por Simpson 3/8</button>
             </form>
-            <form action="/grafica_3d" method="get">
-                <button type="submit" class="button integracion_simpson_tresoctavos-button">Gráfica de Solidos de Revolución</button>
+            <form action="/matrices" method="get">
+                <button type="submit" class="button matrices">Álgebra de Matrices</button>
             </form>
         </div>
     </main>
