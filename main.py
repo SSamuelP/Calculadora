@@ -1,5 +1,7 @@
 import boolean
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from booleana import simplificar_operacion
@@ -22,6 +24,7 @@ from integracion_simpson_tresoctavos import integracion_simpson_tresoctavos_con_
 from integracion_montecarlo import integracion_montecarlo_contar_puntos
 from graficadora_3d import generate_3d_graph
 from algebra_matriz import *
+from scipy.stats import pearsonr
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -406,6 +409,7 @@ def integracion_montecarlo():
                            puntos_dentro=puntos_dentro,
                            error_msg=error_msg)
 
+#Ruta graficadora 3d
 @app.route('/grafica_3d', methods=["GET",'POST'])  
 def generate_graph():
     graph_image = None
@@ -443,5 +447,54 @@ def calculadora_matrices():
 
     return render_template('matrices.html', resultado=resultado, operacion = operacion, es_numero=es_numero)
 
+#Minimos cuadrados
+@app.route('/ajuste_curvas', methods=['GET','POST'])
+def ajuste_curvas():
+    if request.method == 'POST':
+        try:
+            data = request.json
+            n = int(data['num_points'])
+            degree = int(data['degree'])
+
+            # Collect points
+            xs = [float(data[f'x{i+1}']) for i in range(n)]
+            ys = [float(data[f'y{i+1}']) for i in range(n)]
+
+            x = np.array(xs)
+            y = np.array(ys)
+
+            correlations = []
+            polynomial_expressions = []
+            curves = []
+
+            for d in range(1, degree + 1):
+                coeffs = np.polyfit(x, y, d)
+                poly_fit = np.poly1d(coeffs)
+                correlation, _ = pearsonr(y, poly_fit(x))
+                error = 1 - correlation  # Calculo de error como complemento del coeficiente de correlación
+
+                correlations.append({"degree": d, "correlation": correlation, "error": error})
+                polynomial_expressions.append({"degree": d, "expression": str(poly_fit)})
+            
+                curve_data = {
+                    "degree": d,
+                    "x_values": x.tolist(),
+                    "y_values": poly_fit(x).tolist()
+                }
+                curves.append(curve_data)
+
+            return jsonify({
+                "correlations": correlations,
+                "expressions": polynomial_expressions,
+                "curves": curves,
+                "x_original": x.tolist(),
+                "y_original": y.tolist()
+            })
+        except Exception as e:
+            return jsonify({"error": str(e)})
+    else:
+        return render_template('ajuste_curvas.html')  # el GET solo muestra el form
+
+# Ruta principal de la página
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)
