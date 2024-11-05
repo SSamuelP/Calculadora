@@ -418,52 +418,30 @@ def generate_graph():
     # Enviar la imagen a la página web
     return render_template('graficadora_3d.html', graph_image=graph_image)
 
-# Ruta principal de la página
+#página para realizar algebra matricial
 @app.route('/matrices', methods=['GET', 'POST'])
-def algebra_matrices():
-    resultado = {}
-    matriz = None
-    potencia = None
-    
+def calculadora_matrices():
+    resultado = None
+    es_numero = False 
+    operacion =""
+
     if request.method == 'POST':
-        # Leer la matriz de entrada del formulario
-        matriz = request.form.get('matriz')
-        operacion = request.form.get('operacion')
-        potencia = request.form.get('potencia', None)
-        
-        # Convertir la matriz de string a array NumPy
-        try:
-            matriz = np.array(eval(matriz))
-        except:
-            resultado['error'] = "Formato de matriz no válido. Use [[a,b],[c,d]]."
-            return render_template('matrices.html', resultado=resultado)
+        accion = request.form.get('accion')
 
-        # Selección de la operación
-        if operacion == 'determinante':
-            resultado['determinante'] = calcular_determinante(matriz)
-        elif operacion == 'traspuesta':
-            resultado['traspuesta'] = calcular_traspuesta(matriz).tolist()
-        elif operacion == 'inversa':
-            resultado['inversa'] = calcular_inversa(matriz).tolist() if isinstance(calcular_inversa(matriz), np.ndarray) else "No invertible"
-        elif operacion == 'diagonal':
-            resultado['diagonal'] = calcular_diagonal(matriz).tolist()
-        elif operacion == 'factorizacion_lu':
-            P, L, U = factorizacion_LU(matriz)
-            resultado['P'] = P.tolist()
-            resultado['L'] = L.tolist()
-            resultado['U'] = U.tolist()
-        elif operacion == 'potencia' and potencia:
-            try:
-                potencia = int(potencia)
-                resultado['potencia'] = calcular_potencia(matriz, potencia).tolist()
-            except ValueError:
-                resultado['error'] = "La potencia debe ser un número entero."
-        elif operacion == 'gauss_jordan':
-            resultado['gauss_jordan'] = gauss_jordan(matriz).tolist()
-        else:
-            resultado['error'] = "Operación no válida o datos insuficientes."
+        if accion == 'crear_matriz':
+            nombre_matriz = request.form['nombre_matriz']
+            filas = int(request.form['filas'])
+            columnas = int(request.form['columnas'])
+            crear_matriz(nombre_matriz, filas, columnas, request.form)
 
-    return render_template('matrices.html', resultado=resultado)
+        elif accion == 'realizar_operacion':
+            operacion = request.form['operacion']
+            resultado = evaluar_operacion(operacion)
+            
+            # Verificar si el resultado es un número (int o float)
+            es_numero = isinstance(resultado, (int, float))
+
+    return render_template('matrices.html', resultado=resultado, operacion = operacion, es_numero=es_numero)
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0", port = 5000, debug=True)

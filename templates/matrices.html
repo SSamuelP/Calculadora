@@ -3,122 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Álgebra Matricial</title>
+    <title>Calculadora Matricial</title>
+    <!-- MathJax para renderizar expresiones LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
-        /* Definimos el color rosa palo */
-        :root {
-            --color-principal: #D8A7B1;
-            --color-texto: #4A4A4A; /* Un gris oscuro para contraste */
-            --color-fondo: #F8F2F4; /* Un fondo suave */
-        }
-
         body {
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            flex-direction: column;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
         }
 
-        h1 {
-            color: var(--color-principal);
-            text-align: center;
-            margin-top: 20px;
+        h1, h2, h3 {
+            color: #333;
         }
 
         form {
-            background-color: white;
-            border: 2px solid var(--color-principal);
-            border-radius: 8px;
+            margin: 20px 0;
             padding: 20px;
-            width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            width: 100%;
+            max-width: 400px;
         }
 
         label {
-            font-weight: bold;
-            color: var(--color-principal);
             display: block;
             margin-top: 10px;
+            font-weight: bold;
         }
 
-        input, select {
+        input[type="text"], input[type="number"] {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid var(--color-principal);
-            border-radius: 5px;
+            margin: 5px 0;
+            box-sizing: border-box;
         }
 
         button {
-            background-color: var(--color-principal);
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50;
             color: white;
-            padding: 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
-            width: 100%;
         }
 
         button:hover {
-            background-color: #C08B98; /* Un tono ligeramente más oscuro */
+            background-color: #45a049;
         }
 
-        .resultado {
-            width: 300px;
+        #elementos_matriz {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* Estilo de la matriz con llaves */
+        /* Estilo de la matriz con llaves */
+        .matriz-contenedor {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .llave-izquierda, .llave-derecha {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .matriz-cuerpo {
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
+        }
+
+        .matriz-fila {
+            display: flex;
+            justify-content: center;
+        }
+
+        .matriz-elemento {
+            width: 40px;
+            height: 40px;
             text-align: center;
+            margin: 2px;
+            font-size: 18px;
+        }
+
+        /* Resultado estilizado */
+        .resultado {
             margin-top: 20px;
-        }
-
-        h2 {
-            color: var(--color-principal);
-        }
-
-        pre {
-            background-color: #F1E8EB;
-            padding: 10px;
+            padding: 15px;
+            border: 1px solid #333;
             border-radius: 5px;
-            overflow: auto;
-            white-space: pre-wrap;
-            color: var(--color-texto);
+            background-color: #e1e1e1;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Calculadora de Álgebra Matricial</h1>
-    
-    <form method="POST">
-        <label for="matriz">Ingrese la matriz (formato: [[a,b],[c,d]]):</label>
-        <input name="matriz" rows="3" cols="30" value="{{ matriz }}" required></input>
+    <h1>Calculadora Matricial</h1>
 
-        <label for="operacion">Seleccione la operación:</label>
-        <select name="operacion" required>
-            <option value="determinante">Determinante</option>
-            <option value="traspuesta">Traspuesta</option>
-            <option value="inversa">Inversa</option>
-            <option value="diagonal">Diagonal</option>
-            <option value="factorizacion_lu">Factorización LU</option>
-            <option value="potencia">Potencia</option>
-            <option value="gauss_jordan">Gauss-Jordan</option>
-        </select>
+    <!-- Formulario para crear una nueva matriz -->
+    <h2>Crear Nueva Matriz</h2>
+    <form action="/matrices" method="post">
+        <label for="nombre_matriz">Nombre de la Matriz:</label>
+        <input type="text" name="nombre_matriz" required>
 
-        <label for="potencia">Potencia (solo si se elige "Potencia"):</label>
-        <input type="number" name="potencia">
+        <label for="columnas">Columnas:</label>
+        <input type="number" name="columnas" min="1" required>
 
-        <button type="submit">Calcular</button>
+        <label for="filas">Filas:</label>
+        <input type="number" name="filas" min="1" required>
+
+        <div id="elementos_matriz">
+            <!-- Aquí se agregarán los campos para los elementos de la matriz -->
+        </div>
+
+        <button type="submit" name="accion" value="crear_matriz">Crear Matriz</button>
     </form>
 
+    <!-- Formulario para realizar una operación sobre matrices existentes -->
+    <h2>Operar con Matrices Existentes</h2>
+    <form action="/matrices" method="post">
+        <label for="operacion">Operación (Ejemplo: Det(A), Trasp(A), A + B): </label>
+        <input type="text" name="operacion" value="{{operacion}}" required>
+
+        <button type="submit" name="accion" value="realizar_operacion">Realizar Operación</button>
+    </form>
+
+    <!-- Resultado de la operación -->
+    {% if resultado %}
+    <h3>Resultado:</h3>
     <div class="resultado">
-        {% if resultado %}
-            <h2>Resultado:</h2>
-            <pre>{{ resultado }}</pre>
+        {% if es_numero %}
+            {{ resultado }}
+        {% else %}
+            <div class="matriz-contenedor">
+                \[{{ resultado|safe }}\] <!-- Usando delimitadores para MathJax -->
+            </div>
         {% endif %}
-    </div>
+    </div>    
+    {% endif %}
+
+    <script>
+        // Script para crear campos de entrada para los elementos de la matriz según las filas y columnas especificadas
+        document.querySelector('input[name="filas"]').addEventListener('input', actualizarCampos);
+        document.querySelector('input[name="columnas"]').addEventListener('input', actualizarCampos);
+
+        function actualizarCampos() {
+            const filas = document.querySelector('input[name="filas"]').value;
+            const columnas = document.querySelector('input[name="columnas"]').value;
+            const contenedor = document.getElementById('elementos_matriz');
+
+            contenedor.innerHTML = '';
+            const matrizContenedor = document.createElement('div');
+            matrizContenedor.classList.add('matriz-contenedor');
+
+            const llaveIzquierda = document.createElement('span');
+            llaveIzquierda.classList.add('llave-izquierda');
+            llaveIzquierda.textContent = '{';
+            matrizContenedor.appendChild(llaveIzquierda);
+
+            const matrizCuerpo = document.createElement('div');
+            matrizCuerpo.classList.add('matriz-cuerpo');
+
+            for (let i = 0; i < filas; i++) {
+                const filaDiv = document.createElement('div');
+                filaDiv.classList.add('matriz-fila');
+
+                for (let j = 0; j < columnas; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.step = 'any';
+                    input.name = `elemento_${i}_${j}`;
+                    input.placeholder = `(${i + 1},${j + 1})`;
+                    input.classList.add('matriz-elemento');
+                    filaDiv.appendChild(input);
+                }
+
+                matrizCuerpo.appendChild(filaDiv);
+            }
+
+            matrizContenedor.appendChild(matrizCuerpo);
+
+            const llaveDerecha = document.createElement('span');
+            llaveDerecha.classList.add('llave-derecha');
+            llaveDerecha.textContent = '}';
+            matrizContenedor.appendChild(llaveDerecha);
+
+            contenedor.appendChild(matrizContenedor);
+        }
+    </script>
 </body>
 </html>
