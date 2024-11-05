@@ -423,7 +423,7 @@ def generate_graph():
     return render_template('graficadora_3d.html', graph_image=graph_image)
 
 #Minimos cuadrados
-@app.route('/ajuste_curvas', methods=['POST', 'GET'])
+@app.route('/ajuste_curvas', methods=['GET','POST'])
 def ajuste_curvas():
     if request.method == 'POST':
         try:
@@ -446,10 +446,11 @@ def ajuste_curvas():
                 coeffs = np.polyfit(x, y, d)
                 poly_fit = np.poly1d(coeffs)
                 correlation, _ = pearsonr(y, poly_fit(x))
+                error = 1 - correlation  # Calculo de error como complemento del coeficiente de correlación
 
-                correlations.append({"degree": d, "correlation": correlation})
+                correlations.append({"degree": d, "correlation": correlation, "error": error})
                 polynomial_expressions.append({"degree": d, "expression": str(poly_fit)})
-
+            
                 curve_data = {
                     "degree": d,
                     "x_values": x.tolist(),

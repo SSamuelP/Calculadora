@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Aplicación de Ajuste de Curvas</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
+  <meta charset="UTF-8">
+  <title>Aplicación de Ajuste de Curvas</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
         h1 { color: #4CAF50; }
         form { background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
@@ -16,6 +16,20 @@
         h2, h3 { margin-top: 30px; color: #333; }
         ul { list-style-type: none; padding: 0; }
         ul li { background: #eee; margin: 5px 0; padding: 10px; border-radius: 4px; }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 8px;
+          border: 1px solid #ddd;
+        }
+
+        th {
+        background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +50,10 @@
 
     <!-- Contenedor de la gráfica -->
     <div id="plotly-graph" style="width:600px;height:400px;margin-top:20px;"></div>
+
+    <h2>Resultados</h2>
+    <div id="correlation-results"></div>
+    <div id="equation-results"></div>
 
     <!-- JavaScript para añadir automáticamente los campos de puntos en función del número ingresado -->
     <script>
@@ -82,7 +100,27 @@
                     alert("Error: " + result.error);
                     return;
                 }
+                
+                const correlations = result.correlations;
+                const expressions = result.expressions;
+                // Actualiza los resultados de correlación
+                let correlationHtml = "";
+                for (const correlation of correlations) {
+                  correlationHtml += `
+                    <p>Grado ${correlation.degree}: Coeficiente de Correlación = ${correlation.correlation.toFixed(4)}</p>
+                  `;
+                }
+                document.getElementById('correlation-results').innerHTML = correlationHtml;
 
+                // Actualiza los resultados de la ecuación
+                let equationHtml = "";
+                for (const expression of expressions) {
+                  equationHtml += `
+                    <p>Grado ${expression.degree}: Ecuación = ${expression.expression}</p>
+                  `;
+                }
+                
+                document.getElementById('equation-results').innerHTML = equationHtml;
                 const xOriginal = result.x_original;
                 const yOriginal = result.y_original;
                 const curves = result.curves;
