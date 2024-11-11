@@ -21,12 +21,28 @@ def Inv(matriz):
 #La diagonal
 def Diag(matriz):
     matriz = np.array(matriz)
-    return np.diag(matriz)
+    # Check if matriz is 2D
+    if matriz.ndim != 2:
+        return "Error: Input must be a 2D matrix."
+    return np.diag(matriz)  # Return diagonal elements as a 1D array
+
 
 #Factorización LU
 def LU(matriz):
-    P, L, U = lu(matriz)
-    return P, L, U
+    matriz = np.array(matriz)
+    # Asegurar que sea cuadrada la matriz
+    if matriz.shape[0] != matriz.shape[1]:
+        return "La descomposición LU requiere una matriz cuadrada."
+
+    try:
+        P, L, U = lu(matriz)
+        # Format each component in LaTeX for rendering
+        P_latex = formatear_matriz_latex(P)
+        L_latex = formatear_matriz_latex(L)
+        U_latex = formatear_matriz_latex(U)
+        return f"P: {P_latex}, L: {L_latex}, U: {U_latex}"
+    except Exception as e:
+        return f"Error in LU decomposition: {str(e)}"
 
 #Potenciación
 def Pot(matriz, potencia):
@@ -54,11 +70,20 @@ def GaussJordan(matriz_aumentada):
 
     return matriz_aumentada
 
-def formatear_matriz_latex(resultado):
-    # Convierte la matriz en formato LaTeX para MathJax sin añadir delimitadores adicionales
-    filas = [" & ".join(map(str, fila)) for fila in resultado]  # Une elementos de cada fila con "&"
-    matriz_latex = "\\begin{bmatrix} " + " \\\\ ".join(filas) + " \\end{bmatrix}"
-    return matriz_latex
+# Se actualiza el metodo para que devuelva el resultado en formato LaTeX y debugee el error cuando trabaja con Numpy
+def formatear_matriz_latex(a):
+    """Returns a LaTeX bmatrix
+
+    :a: numpy array
+    :returns: LaTeX bmatrix as a string
+    """
+    if len(a.shape) > 2:
+        raise ValueError('bmatrix solo puede mostrar 2 dimensiones')
+    lines = str(a).replace('[', '').replace(']', '').splitlines()
+    rv = [r'\begin{bmatrix}']
+    rv += ['  ' + ' & '.join(l.split()) + r'\\' for l in lines]
+    rv +=  [r'\end{bmatrix}']
+    return '\n'.join(rv)
 
 def crear_matriz(nom_matriz, tam_filas, tam_columnas, elementos):
     matriz = []
@@ -85,15 +110,39 @@ def evaluar_operacion(operacion):
         "GaussJordan": GaussJordan,
         **matrices  # Agregar matrices guardadas al contexto
     }
-    
+
     try:
         # Evaluar la operación con eval y el contexto definido
         resultado = eval(operacion, {"__builtins__": None}, contexto)
-        
+
         # Si el resultado es una matriz, convertirlo al formato LaTeX
         if isinstance(resultado, np.ndarray):
             resultado = formatear_matriz_latex(resultado)
-            
+
         return resultado
     except Exception as e:
         return f"Error al realizar la operación: {str(e)}"
+
+def evaluar_operacion(operacion):
+    contexto = {
+        "Det": Det, 
+        "Trasp": Trasp, 
+        "Inv": Inv, 
+        "Diag": Diag, 
+        "LU": LU, 
+        "Pot": Pot, 
+        "GaussJordan": GaussJordan,
+        **matrices  # Agregar matrices guardadas al contexto
+    }
+
+    try:
+        # Evaluar la operación con eval y el contexto definido
+        resultado = eval(operacion, {"__builtins__": None}, contexto)
+
+        # # Si el resultado es una matriz, convertirlo al formato LaTeX
+        if isinstance(resultado, np.ndarray):
+            resultado = formatear_matriz_latex(resultado)
+
+        return resultado
+    except Exception as e:
+        return f"Error al realizar la converción: {str(e)}"
