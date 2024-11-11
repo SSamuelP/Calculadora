@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Aplicación de Ajuste de Curvas</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
+    <meta charset="UTF-8">
+    <title>Aplicación de Ajuste de Curvas</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
         h1 { color: #02ffa7; }
         form { background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
@@ -17,18 +19,18 @@
         ul { list-style-type: none; padding: 0; }
         ul li { background: #eee; margin: 5px 0; padding: 10px; border-radius: 4px; }
         table {
-          border-collapse: collapse;
-          width: 100%;
+            border-collapse: collapse;
+            width: 100%;
         }
 
         th, td {
-          text-align: left;
-          padding: 8px;
-          border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
         }
 
         th {
-        background-color: #f2f2f2;
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -58,22 +60,37 @@
     <div id="correlation-results"></div>
     <div id="equation-results"></div>
 
-    <!-- JavaScript para añadir automáticamente los campos de puntos en función del número ingresado -->
     <script>
+        // Función para actualizar los campos de puntos dinámicamente
         document.getElementById('num_points').addEventListener('input', function() {
             let numPoints = parseInt(this.value);
             let container = document.getElementById('point_inputs');
-            container.innerHTML = '';
+            container.innerHTML = ''; // Limpiar el contenedor
 
             if (numPoints > 0) {
+                // Crear dinámicamente los campos para cada punto
                 for (let i = 1; i <= numPoints; i++) {
-                    container.innerHTML += `
-                        <label for="x${i}">x${i}:</label>
-                        <input type="number" step="any" name="x${i}" id="x${i}" required>
-                        <label for="y${i}">y${i}:</label>
-                        <input type="number" step="any" name="y${i}" id="y${i}" required>
-                        <br><br>
-                    `;
+                    let xInput = document.createElement('input');
+                    xInput.type = 'number';
+                    xInput.step = 'any';
+                    xInput.name = `x${i}`;
+                    xInput.id = `x${i}`;
+                    xInput.required = true;
+                    xInput.placeholder = `x${i}`;
+
+                    let yInput = document.createElement('input');
+                    yInput.type = 'number';
+                    yInput.step = 'any';
+                    yInput.name = `y${i}`;
+                    yInput.id = `y${i}`;
+                    yInput.required = true;
+                    yInput.placeholder = `y${i}`;
+
+                    container.appendChild(document.createTextNode(`x${i}: `));
+                    container.appendChild(xInput);
+                    container.appendChild(document.createTextNode(` y${i}: `));
+                    container.appendChild(yInput);
+                    container.appendChild(document.createElement('br'));
                 }
             }
         });
@@ -106,24 +123,29 @@
                 
                 const correlations = result.correlations;
                 const expressions = result.expressions;
+
                 // Actualiza los resultados de correlación
                 let correlationHtml = "";
                 for (const correlation of correlations) {
-                  correlationHtml += `
-                    <p>Grado ${correlation.degree}: Coeficiente de Correlación = ${correlation.correlation.toFixed(4)}</p>
-                  `;
+                    correlationHtml += `
+                        <p>Grado ${correlation.degree}: Coeficiente de Correlación = ${correlation.correlation.toFixed(4)}</p>
+                    `;
                 }
                 document.getElementById('correlation-results').innerHTML = correlationHtml;
 
-                // Actualiza los resultados de la ecuación
+                // Actualiza los resultados de la ecuación en LaTeX
                 let equationHtml = "";
                 for (const expression of expressions) {
-                  equationHtml += `
-                    <p>Grado ${expression.degree}: Ecuación = ${expression.expression}</p>
-                  `;
+                    equationHtml += `
+                        <p>Grado ${expression.degree}: Ecuación = \\( ${expression.expression} \\)</p>
+                    `;
                 }
                 
                 document.getElementById('equation-results').innerHTML = equationHtml;
+                
+                // Recarga MathJax para renderizar las ecuaciones LaTeX
+                MathJax.typeset();
+
                 const xOriginal = result.x_original;
                 const yOriginal = result.y_original;
                 const curves = result.curves;

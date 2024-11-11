@@ -1,11 +1,10 @@
 import boolean
 import numpy as np
-import matplotlib.pyplot as plt
-import os
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from booleana import simplificar_operacion
 from flask import Flask, render_template, request, jsonify
+from scipy.stats import pearsonr
 from logica import calculadora_logica
 from logica_especifica import calculadora_logica_especifica
 from conversor_bases import convert_to_bases
@@ -24,7 +23,7 @@ from integracion_simpson_tresoctavos import integracion_simpson_tresoctavos_con_
 from integracion_montecarlo import integracion_montecarlo_contar_puntos
 from graficadora_3d import generate_3d_graph
 from algebra_matriz import *
-from scipy.stats import pearsonr
+from ajuste_curvas import format_polynomial_expression_latex
 
 algebra = boolean.BooleanAlgebra()
 app = Flask(__name__)
@@ -441,14 +440,14 @@ def calculadora_matrices():
         elif accion == 'realizar_operacion':
             operacion = request.form['operacion']
             resultado = evaluar_operacion(operacion)
-            
+
             # Verificar si el resultado es un número (int o float)
             es_numero = isinstance(resultado, (int, float))
 
     return render_template('matrices.html', resultado=resultado, operacion = operacion, es_numero=es_numero)
 
 #Minimos cuadrados
-@app.route('/ajuste_curvas', methods=['GET','POST'])
+@app.route('/ajuste_curvas', methods=['POST', 'GET'])
 def ajuste_curvas():
     if request.method == 'POST':
         try:
@@ -456,7 +455,7 @@ def ajuste_curvas():
             n = int(data['num_points'])
             degree = int(data['degree'])
 
-            # Collect points
+            # Recopilar puntos
             xs = [float(data[f'x{i+1}']) for i in range(n)]
             ys = [float(data[f'y{i+1}']) for i in range(n)]
 
@@ -471,11 +470,11 @@ def ajuste_curvas():
                 coeffs = np.polyfit(x, y, d)
                 poly_fit = np.poly1d(coeffs)
                 correlation, _ = pearsonr(y, poly_fit(x))
-                error = 1 - correlation  # Calculo de error como complemento del coeficiente de correlación
 
-                correlations.append({"degree": d, "correlation": correlation, "error": error})
-                polynomial_expressions.append({"degree": d, "expression": str(poly_fit)})
-            
+                correlations.append({"degree": d, "correlation": correlation})
+                polynomial_expression = format_polynomial_expression_latex(coeffs)
+                polynomial_expressions.append({"degree": d, "expression": polynomial_expression})
+
                 curve_data = {
                     "degree": d,
                     "x_values": x.tolist(),
@@ -493,7 +492,7 @@ def ajuste_curvas():
         except Exception as e:
             return jsonify({"error": str(e)})
     else:
-        return render_template('ajuste_curvas.html')  # el GET solo muestra el form
+        return render_template('ajuste_curvas.html')
 
 # Ruta principal de la página
 if __name__ == '__main__':
