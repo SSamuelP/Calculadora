@@ -4,12 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graficadora 3D</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f3f3f3;
+            color: rgb(97, 192, 2);
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: rgb(97, 192, 2);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        form, div {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        label {
+            font-size: 1em;
+            color: #555;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: rgb(97, 192, 2);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #99e600;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Graficadora 3D de un sólido de revolución</h1>
     <p>Ingresa las funciones para generar el sólido de revolución.</p>
     
-    <form action="/grafica_3d" method="POST"> <!-- Cambiado method a POST -->
+    <form action="/grafica_3d" method="POST">
         <label for="func1">Función 1 (y1):</label>
         <input type="text" id="func1" name="func1" required>
         <br><br>
@@ -18,6 +85,9 @@
         <br><br>
         <button type="submit">Generar Gráfica</button>
     </form>
+    <div>
+        <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button> 
+    </div>
 
     {% if graph_image %}
         <h2>Gráfica Generada:</h2>

@@ -39,7 +39,7 @@
         }
 
         .sidebar {
-            background-color: #fff;
+            background-color: #efe0e0;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,7 @@
 
         .sidebar h2 {
             font-size: 24px;
-            color: #ff6600;
+            color: #ff0008;
             margin-bottom: 15px;
         }
 
@@ -73,7 +73,7 @@
 
         h1 {
             font-size: 36px;
-            color: #ff6600;
+            color: #ff0008;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -107,20 +107,30 @@
         #variables-container {
             margin-top: 20px;
         }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #ff0008;
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
 
+        }
         input[type="submit"] {
             padding: 12px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
             border: none;
-            background-color: #dd720f;
+            background-color: #ff0008;
             color: white;
             transition: background-color 0.3s, transform 0.3s;
         }
 
         input[type="submit"]:hover {
-            background-color: #a8470f;
+            background-color: #aa0207;
             transform: translateY(-2px);
         }
 
@@ -207,6 +217,7 @@
                 </div>
 
                 <input type="submit" value="Evaluar">
+                <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
             </form>
 
             {% if error %}

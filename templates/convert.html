@@ -31,7 +31,7 @@
         }
 
         input[type="text"] {
-            width: calc(100% - 40px);
+            width: 500px;
             padding: 10px;
             margin-bottom: 15px;
             border-radius: 5px;
@@ -50,6 +50,19 @@
             font-weight: bold;
             color: #cf75ad;
         }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #cf75ad; 
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+            margin: 5px;
+            width: 150px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +71,7 @@
     <p>Binario: <span id="binary">N/A</span></p>
     <p>Octal: <span id="octal">N/A</span></p>
     <p>Hexadecimal: <span id="hexadecimal">N/A</span></p>
-
+    <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
     <script>
         function update() {
             var number = document.getElementById("number").value;

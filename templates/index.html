@@ -9,7 +9,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #e9ecef;
-            color: #333;
+            color: #000;
             margin: 0;
             padding: 0;
             background-image: url('/static/css/imagenes/opcion1.png'); 
@@ -31,22 +31,33 @@
             letter-spacing: 1.5px;
         }
         main {
-            padding: 60px 20px;
+            padding: 10px 20px;
         }
         h2 {
             font-size: 24px;
             margin-top: 20px;
-            color: #495057;
+            color: #000;
+        }
+        .category {
+            margin-top: 40px;
+        }
+        .category h3 {
+            font-style: italic;
+            font-variant: small-caps;
+            font-size: 26px;
+            color: #000;
+            text-align: center;
+            margin-left: 40px;
         }
         .button-container {
-            margin-top: 40px;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap; /* Permitir que los botones se ajusten si hay más de dos */
+            flex-wrap: wrap; /* Permite que los botones se acomoden en varias filas si es necesario */
+            justify-content: center; /* Centra los botones */
+            gap: 15px; /* Espacio entre los botones */
+            padding: 15px;
         }
         .button {
-            padding: 15px 40px;
+            padding: 15px 20px;
             font-size: 18px;
             cursor: pointer;
             border-radius: 8px;
@@ -55,68 +66,7 @@
             color: white;
             text-transform: uppercase;
             letter-spacing: 1px;
-            flex: 1;
-            min-width: 250px; /* Asegurar que los botones tengan un tamaño mínimo */
-        }
-        .logic-button {
-            background-color: #007bff;
-        }
-        .boolean-button {
-            background-color: #28a745;
-        }
-        .logic-esp-button {
-            background-color: #6f42c1;
-        }
-        .convert-button {
-            background-color: #ff00c8;
-        }
-        .evaluador-button {
-            background-color: #ff0008;
-        }
-        .graficadora-button {
-            background-color: #ff7700;
-        }
-        .derivadas-button {
-            background-color: #ffea00;
-        }
-        .falsa_regla-button {
-            background-color: #8000ff;
-        }
-        .biseccion-button {
-            background-color: #4a2727;
-        }
-        .secante-button {
-            background-color: #806600;
-        }
-        .newton-button {
-            background-color: #d9796a;
-        }
-        .polinomio-button {
-            background-color: #2f7167;
-        }
-        .integracion_rectangulos-button {
-            background-color: #162d92;
-        }
-        .integracion_montecarlo-button {
-            background-color: #241c78;
-        }
-        .integracion_trapecios-button {
-            background-color: #661c78;
-        }
-        .integracion_simpson_untercio-button {
-            background-color: #92168a;
-        }
-        .integracion_simpson_tresoctavos-button {
-            background-color: #921629;
-        }
-        .matrices {
-            background-color: #75522d;
-        }
-        .grafica_3d {
-            background-color: chartreuse;
-        }
-        .ajuste_curvas {
-            background-color: #02ffa7;
+            min-width: 160px; /* Asegura que todos los botones tengan el mismo tamaño */
         }
         .button:hover {
             opacity: 0.9;
@@ -126,6 +76,26 @@
             transform: translateY(0);
         }
         
+        /* Colores de los botones */
+        .logic-button { background-color: #007bff; }
+        .boolean-button { background-color: #28a745; }
+        .logic-esp-button { background-color: #6f42c1; }
+        .convert-button { background-color: #ff00c8; }
+        .evaluador-button { background-color: #ff0008; }
+        .graficadora-button { background-color: #ff7700; }
+        .grafica_3d { background-color: rgb(97, 192, 2); }
+        .falsa_regla-button { background-color: #8000ff; }
+        .biseccion-button { background-color: #4a2727; }
+        .secante-button { background-color: #806600; }
+        .newton-button { background-color: #d9796a; }
+        .polinomio-button { background-color: #2f7167; }
+        .integracion_montecarlo-button { background-color: #241c78; }
+        .integracion_rectangulos-button { background-color: #162d92; }
+        .integracion_trapecios-button { background-color: #661c78; }
+        .integracion_simpson_untercio-button { background-color: #92168a; }
+        .integracion_simpson_tresoctavos-button { background-color: #921629; }
+        .matrices { background-color: #75522d; }
+        .ajuste_curvas { background-color: #049d67; }
     </style>
 </head>
 <body>
@@ -133,78 +103,106 @@
         <h1>Calculadoras para Matemáticas Discretas</h1>
     </header>
     <main>
-        <h2>¿Qué calculadora deseas utilizar?</h2>
-        <div class="button-container">
+        <!-- Categoría: Álgebra Booleana -->
+        <div class="category">
+            <h3>Álgebra Booleana</h3>
+            <div class="button-container">
+                <form action="/calculadora_logica" method="get">
+                    <button type="submit" class="button logic-button">Calculadora Lógica</button>
+                </form>
 
-            <form action="/calculadora_logica" method="get">
-                <button type="submit" class="button logic-button">Calculadora Lógica</button>
-            </form>
+                <form action="/calculadora_logica_especifica" method="get">
+                    <button type="submit" class="button logic-esp-button">Calculadora Lógica Específica</button>
+                </form>
 
-            <form action="/calculadora_booleana" method="get">
-                <button type="submit" class="button boolean-button">Calculadora Booleana</button>
-            </form>
+                <form action="/calculadora_booleana" method="get">
+                    <button type="submit" class="button boolean-button">Calculadora Booleana</button>
+                </form>
 
-            <form action="/calculadora_logica_especifica" method="get">
-                <button type="submit" class="button logic-esp-button">Calculadora Lógica Específica</button>
-            </form>
-
-            <form action="/convert" method="get">
-                <button type="submit" class="button convert-button">Conversor de Bases</button>
-            </form>
-
-            <form action="/evaluador_expresiones" method="get">
-                <button type="submit" class="button evaluador-button">Evaluador de Expresiones</button>
-            </form>
-
-            <form action="/graficadora" method="get">
-                <button type="submit" class="button graficadora-button">Graficadora</button>
-            </form>
-            <form action="/grafica_3d" method="get">
-                <button type="submit" class="button grafica_3d">Gráfica de Solidos de Revolución</button>
-            </form>
-
-            <form action="/falsa_posicion" method="get">
-                <button type="submit" class="button falsa_regla-button">Método de la Regla Falsa</button>
-            </form>
-
-            <form action="/derivadas" method="get">
-                <button type="submit" class="button derivadas-button">Calculadora de Derivadas</button>
-            </form>
-
-            <form action="/biseccion" method="get">
-                <button type="submit" class="button biseccion-button">Método de Bisección</button>
-            </form>
-            <form action="/metodo_secante" method="get">
-                <button type="submit" class="button secante-button">Método de Secante</button>
-            </form>
-            <form action="/newton" method="get">
-                <button type="submit" class="button newton-button">Método de Newton-Raphson</button>
-            </form>
-            <form action="/polinomio" method="get">
-                <button type="submit" class="button polinomio-button">Método de los Polinomios</button>
-            </form>
-            <form action="/integracion_montecarlo" method="get">
-                <button type="submit" class="button integracion_montecarlo-button">Integración por Montecarlo</button>
-            </form>
-            <form action="/integracion_rectangulos" method="get">
-                <button type="submit" class="button integracion_rectangulos-button">Integración por rectángulos</button>
-            </form>
-            <form action="/integracion_trapecios" method="get">
-                <button type="submit" class="button integracion_trapecios-button">Integración por Trapecios</button>
-            </form>
-            <form action="/integracion_simpson_untercio" method="get">
-                <button type="submit" class="button integracion_simpson_untercio-button">Integración por Simpson 1/3</button>
-            </form>
-            <form action="/integracion_simpson_tresoctavos" method="get">
-                <button type="submit" class="button integracion_simpson_tresoctavos-button">Integración por Simpson 3/8</button>
-            </form>
-            <form action="/matrices" method="get">
-                <button type="submit" class="button matrices">Álgebra de Matrices</button>
-            </form>
-            <form action="/ajuste_curvas" method="get">
-                <button type="submit" class="button ajuste_curvas">Ajuste de Curvas</button>
-            </form>
+            </div>
         </div>
+
+        <!-- Categoría: Gráficadoras -->
+        <div class="category">
+            <h3>Gráficadoras</h3>
+            <div class="button-container">
+                <form action="/graficadora" method="get">
+                    <button type="submit" class="button graficadora-button">Graficadora</button>
+                </form>
+
+                <form action="/grafica_3d" method="get">
+                    <button type="submit" class="button grafica_3d">Gráfica de Solidos de Revolución</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Categoría: Métodos para hallar raíces -->
+        <div class="category">
+            <h3>Métodos para hallar raíces</h3>
+            <div class="button-container">
+                <form action="/biseccion" method="get">
+                    <button type="submit" class="button biseccion-button">Método de Bisección</button>
+                </form>
+
+                <form action="/metodo_secante" method="get">
+                    <button type="submit" class="button secante-button">Método de Secante</button>
+                </form>
+
+                <form action="/falsa_posicion" method="get">
+                    <button type="submit" class="button falsa_regla-button">Método de la Regla Falsa</button>
+                </form>
+
+                <form action="/polinomio" method="get">
+                    <button type="submit" class="button polinomio-button">Método de los Polinomios</button>
+                </form>
+
+                <form action="/newton" method="get">
+                    <button type="submit" class="button newton-button">Método de Newton-Raphson</button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Categoría: Métodos de integración -->
+        <div class="category">
+            <h3>Métodos de Integración</h3>
+            <div class="button-container">
+                <form action="/integracion_montecarlo" method="get">
+                    <button type="submit" class="button integracion_montecarlo-button">Integración por Montecarlo</button>
+                </form>
+
+                <form action="/integracion_rectangulos" method="get">
+                    <button type="submit" class="button integracion_rectangulos-button">Integración por rectángulos</button>
+                </form>
+
+                <form action="/integracion_trapecios" method="get">
+                    <button type="submit" class="button integracion_trapecios-button">Integración por Trapecios</button>
+                </form>
+
+                <form action="/integracion_simpson_untercio" method="get">
+                    <button type="submit" class="button integracion_simpson_untercio-button">Integración por Simpson 1/3</button>
+                </form>
+
+                <form action="/integracion_simpson_tresoctavos" method="get">
+                    <button type="submit" class="button integracion_simpson_tresoctavos-button">Integración por Simpson 3/8</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Categoría: Álgebra de matrices y otros -->
+        <div class="category">
+            <h3>Álgebra de Matrices y otros</h3>
+            <div class="button-container">
+                <form action="/matrices" method="get">
+                    <button type="submit" class="button matrices">Álgebra de Matrices</button>
+                </form>
+                
+                <form action="/ajuste_curvas" method="get">
+                    <button type="submit" class="button ajuste_curvas">Ajuste de Curvas</button>
+                </form>
+            </div>
+        </div>
+        
     </main>
 </body>
 </html>

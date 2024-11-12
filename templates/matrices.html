@@ -10,7 +10,8 @@
     
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-image: url('/static/css/imagenes/opcion1.png');
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,6 +19,7 @@
             background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
+            padding-top: 15px; 
         }
 
         h1, h2, h3 {
@@ -58,7 +60,7 @@
         }
 
         button:hover {
-            background-color: #99754f;
+            background-color: #75522d;
         }
 
         #elementos_matriz {
@@ -133,6 +135,7 @@
         </div>
 
         <button type="submit" name="accion" value="crear_matriz">Crear Matriz</button>
+        <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
     </form>
 
     <!-- Formulario para realizar una operación sobre matrices existentes -->
