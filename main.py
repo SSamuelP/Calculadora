@@ -157,7 +157,7 @@ def biseccion():
 
         # Convertir la expresión en una función simbólica
         expresion_simb = parse_expr(expresion)
-
+        expresion = expresion.replace("**", "^")
         # Llamar al método de bisección con la expresión simbólica
         resultado, iteraciones, error_relativo, tabla_html = metodo_biseccion(expresion_simb, limite_a, limite_b, tolerancia)
     
@@ -185,7 +185,7 @@ def falsa_posicion():
 
         # Convertir la expresión en una función simbólica
         expresion_simb = parse_expr(expresion)
-
+        expresion = expresion.replace("**", "^")
         # Llamar al método de bisección con la expresión simbólica
         resultado, iteraciones, error_relativo, tabla_html = regla_falsa(expresion_simb, limite_a, limite_b, tolerancia)
     
