@@ -24,11 +24,11 @@ def format_polynomial_expression_latex(coeffs):
 
         # Agregar coeficiente y variable en formato adecuado
         if exponent == 0:
-            term += f"{coeff:.2f}"
+            term += f"{coeff:.4f}"
         elif exponent == 1:
-            term += f"{coeff:.2f} x"
+            term += f"{coeff:.4f} x"
         else:
-            term += f"{coeff:.2f} x^{exponent}"
+            term += f"{coeff:.4f} x^{exponent}"
         
         terms.append(term)
 
