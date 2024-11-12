@@ -71,7 +71,6 @@
         }
 
         /* Estilo de la matriz con llaves */
-        /* Estilo de la matriz con llaves */
         .matriz-contenedor {
             display: flex;
             align-items: center;
@@ -113,10 +112,48 @@
             background-color: #e1e1e1;
             font-size: 20px;
         }
+
+        .modo-uso, .operaciones-funciones-container {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            width: 100%;
+            max-width: 600px;
+        }
+        /* Estilos para el texto de instrucciones */
+        .modo-uso h3 {
+            margin-top: 0;
+            color: #75522d;
+        }
+
+        /* Contenedor de funciones y operaciones en dos columnas */
+        .operaciones-funciones {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Estilos para las funciones y operaciones */
+        .funciones, .operaciones {
+            width: 48%;
+            font-size: 14px;
+            color: #444;
+        }
+        
     </style>
 </head>
 <body>
     <h1>Calculadora Matricial</h1>
+
+    <div class="modo-uso">
+        <h3>Modo de Uso - Crear Matriz</h3>
+        <p><strong>Crear matriz:</strong></p>
+        <p>Para crear una matriz, primero asigne un nombre a la matriz en el primer campo.</p>
+        <p>Luego, especifique el número de filas y columnas. Estos campos NO pueden estar en blanco.</p>
+        <p>Se generarán los campos para ingresar los valores de la matriz. Es importante llenar todos los campos; NO puede dejar ningún campo vacío.</p>
+        <p>Presione el botón "Crear Matriz" para almacenar la matriz en la memoria del programa.</p>
+    </div>
 
     <!-- Formulario para crear una nueva matriz -->
     <h2>Crear Nueva Matriz</h2>
@@ -138,12 +175,45 @@
         <button type="button" class="menu-button" onclick="window.location.href='/'">Volver al Menú</button>
     </form>
 
-    <!-- Formulario para realizar una operación sobre matrices existentes -->
+    <!-- Sección para operar con matrices existentes -->
     <h2>Operar con Matrices Existentes</h2>
-    <form action="/matrices" method="post">
-        <label for="operacion">Operación (Ejemplo: Det(A), Trasp(A), A + B): </label>
-        <input type="text" name="operacion" value="{{operacion}}" required>
+    <form action="/matrices" method="post" class="operaciones-funciones-container">
+        
+        <!-- Instrucciones de funciones y operaciones en dos columnas -->
+        <div class="operaciones-funciones">
+            <!-- Lado izquierdo: Funciones -->
+            <div class="funciones">
+                <h3>Funciones</h3>
+                <p>En el campo donde está el título "Operar con Matrices Existentes" puedes hacer uso de estas funciones:</p>
+                <ul>
+                    <li><strong>Det(Matriz):</strong> Para hallar el determinante de la matriz.</li>
+                    <li><strong>Trasp(Matriz):</strong> Para calcular y mostrar la transpuesta de la matriz.</li>
+                    <li><strong>Inv(Matriz):</strong> Para calcular y mostrar la inversa de la matriz.</li>
+                    <li><strong>Diag(Matriz):</strong> Para mostrar la diagonal principal de la matriz.</li>
+                    <li><strong>LU(Matriz):</strong> Para realizar la factorización LU de la matriz.</li>
+                    <li><strong>Pot(Matriz, n):</strong> Para elevar la matriz a la potencia n.</li>
+                    <li><strong>GaussJordan(Matriz):</strong> Para realizar el cálculo de Gauss Jordan en la matriz.</li>
+                </ul>
+            </div>
 
+            <!-- Lado derecho: Operaciones -->
+            <div class="operaciones">
+                <h3>Operaciones</h3>
+                <strong>Suponiendo que anteriormente agregaste dos matrices, con los siguientes nombres: A y B.</strong>
+                <ul>
+                    <li><strong>Multiplicación por escalar:</strong> 2 * A</li>
+                    <li><strong>Multiplicación entre matrices:</strong> A @ B </li>
+                    <li><strong>Suma de matrices:</strong> A + B</li>
+                    <li><strong>Resta de matrices:</strong> A - B</li>
+                    <li><strong>División entre matrices:</strong> A / B</li>
+                    <li><strong>Multiplicación elemento por elemento:</strong> A * B</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <label for="operacion">Operación (Ejemplo: Det(A), Trasp(A), A + B):</label>
+        <input type="text" name="operacion" value="{{operacion}}" required>
         <button type="submit" name="accion" value="realizar_operacion">Realizar Operación</button>
     </form>
 
