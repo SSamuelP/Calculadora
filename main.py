@@ -347,8 +347,9 @@ def integracion_simpson_untercio():
         particiones = int(request.form['particiones'])
 
         # Verificar que el número de particiones sea par
-        if particiones % 2 != 0:
-            error_estimado = "El número de particiones debe ser par para el método de Simpson."
+        while particiones % 2 != 0:
+            particiones += 1
+
         else:
             # Llamar a la función de integración de Simpson
             resultado, error_estimado = integracion_simpson_untercio_con_error(
@@ -371,6 +372,9 @@ def integracion_simpson_tresoctavos():
             limite_inferior = float(request.form['lim_inferior'])
             limite_superior = float(request.form['lim_superior'])
             particiones = int(request.form['particiones'])
+
+            while particiones % 3 != 0:
+                particiones += 1
 
             # Llamar a la función de integración de Simpson 3/8
             resultado, error_estimado = integracion_simpson_tresoctavos_con_error(
