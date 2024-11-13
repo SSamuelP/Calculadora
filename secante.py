@@ -7,11 +7,7 @@ def secant(fun_str, x_a, x_b, steps=50, tol=1e-5):
     fun = sp.sympify(fun_str)
     f = sp.lambdify(x, fun)
 
-    # Verificar si el método de la secante es aplicable
-    if f(x_a) * f(x_b) >= 0:
-        print('El método de la secante no se puede aplicar')
-        return None
-
+  
     # Inicializar DataFrame para almacenar los resultados
     data = {
         'Iteración': [],
